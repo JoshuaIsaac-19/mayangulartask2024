@@ -10,14 +10,16 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent implements OnInit{
-  constructor(private _router:Router, private openDialog: MatDialog,   private fb: FormBuilder){}
+  constructor( private openDialog: MatDialog, private fb: FormBuilder){}
   newTaskForm!: FormGroup;
   @ViewChild('addTask', {static:true}) addaNewTask!:TemplateRef<any>;
 
     ngOnInit() {
       this.newTaskForm = this.fb.group({
         taskName: [''],
+        description:[''],
         status: [''],
+        priority:[''],
         dueDate: ['']
       });
     }
@@ -27,14 +29,12 @@ export class AddTaskComponent implements OnInit{
     console.log("AddTask Button Clicked");
     const dialogRef=this.openDialog.open(this.addaNewTask, {
       autoFocus:false,
-      width:'400px'
+      width:'400px',
+      panelClass:'new-task-form-color'
     });
     dialogRef.afterClosed().subscribe(response =>{
       if(response){
         console.log(this.newTaskForm.value)
-        // console.log(this.newTaskForm.value.taskName);
-        // console.log(this.taskStatus);
-        // console.log(this.dueDate)
         this.newTaskForm.reset()
       }
       console.log('response: ', response)

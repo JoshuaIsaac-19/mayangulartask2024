@@ -7,19 +7,18 @@ import { SettingsComponent } from './home/settings/settings.component';
 import { AboutusComponent } from './home/aboutus/aboutus.component';
 
 const routes: Routes = [
-  {path:'', redirectTo:'/app/home', pathMatch:'full'},
   {
-    path:'app', component:NavbarComponent, children: [
+    path: 'app', component: NavbarComponent, children: [
       {
-         path:'home', component:ContentComponent ,children: [
-        {path:'', component:ContentComponent,pathMatch:'full'},
-        {path:'addtask', component:AddTaskComponent },
-      ] 
-    },
-      {path:'settings', component: SettingsComponent},
-      {path:'aboutus', component:AboutusComponent}
+        path: 'home', component:ContentComponent,children: [
+          { path: '', component: AddTaskComponent},
+        ]
+      },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'aboutus', component: AboutusComponent }
     ]
-  },
+  }
+  
   // {path:'**', redirectTo:'app', pathMatch:'full'}
 ];
 

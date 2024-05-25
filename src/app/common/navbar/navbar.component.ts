@@ -9,20 +9,40 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  constructor(private _router:Router, private openDialog: MatDialog,   private fb: FormBuilder){}
+  constructor(
+    private _router:Router, 
+    private openDialog: MatDialog, 
+    private fb: FormBuilder) {}
+
   newTaskForm!: FormGroup;
   @ViewChild('addTask', {static:true}) addaNewTask!:TemplateRef<any>;
 
-  isHomeActive:boolean=false;
+    currentUrl: string[] =[];
+    currentRoute: string="";
+    urlArrayLength: number=0;
+
+    isHomeActive:boolean=false;
     isAboutActive: boolean= false;
     isSettingsActive: boolean= false;
+
     menuHome: string= "Home";
     menuAboutUs: string= "About us"
     menuSettings: string= "Settings"  
 
     ngOnInit() {
-      this.isHomeActive = true;
-      this._router.navigate(['app/home']);
+      this.currentUrl = (this._router.url).split('/');
+      this.urlArrayLength= this.currentUrl.length;
+      console.log('Current URL:', this.currentUrl[this.urlArrayLength-1]);
+    
+      if(this.currentUrl[this.urlArrayLength-1]=="home"){
+        this.isHomeActive=true;
+      }
+      if(this.currentUrl[this.urlArrayLength-1]=="settings"){
+        this.isSettingsActive= true;
+      }
+      if(this.currentUrl[this.urlArrayLength-1]=="aboutus"){
+        this.isAboutActive= true;
+      }
       this.newTaskForm = this.fb.group({
         taskName: [''],
         status: [''],

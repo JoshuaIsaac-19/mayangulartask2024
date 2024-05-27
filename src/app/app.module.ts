@@ -11,6 +11,7 @@ import { MaterialModule } from './material-module/material.module';
 import { NavbarModule } from './common/navbar/navbar-module/navbar/navbar.module';
 import { SettingsComponent } from './home/settings/settings.component';
 import { AboutusComponent } from './home/aboutus/aboutus.component';
+import { TableComponent } from './home/table/table.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AboutusComponent } from './home/aboutus/aboutus.component';
     ContentComponent,
     SettingsComponent,
     AboutusComponent,
+    TableComponent,
   ],
   imports: [
     BrowserModule,

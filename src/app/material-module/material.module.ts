@@ -38,7 +38,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // Material Data tables
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { MatTableModule } from '@angular/material/table';
     MatSnackBarModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+
     
   ],exports:[
     MatFormFieldModule,

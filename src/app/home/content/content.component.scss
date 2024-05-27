@@ -1,3 +1,9 @@
 .example-card {
-    max-width: 40%;
+  display: fixed;
+  // width: 60%;  
+  height: 100%;
   }
+.display-in-row{
+  display: flex;
+  // flex-direction: row; 
+}

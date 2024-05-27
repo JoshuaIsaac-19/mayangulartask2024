@@ -5,21 +5,22 @@ import { ContentComponent } from './home/content/content.component';
 import { AddTaskComponent } from './home/add-task/add-task.component';
 import { SettingsComponent } from './home/settings/settings.component';
 import { AboutusComponent } from './home/aboutus/aboutus.component';
+import { TableComponent } from './home/table/table.component';
 
 const routes: Routes = [
   {
     path: 'app', component: NavbarComponent, children: [
       {
-        path: 'home', component:ContentComponent,children: [
+        path: 'home', component:TableComponent ,children: [
           { path: '', component: AddTaskComponent},
         ]
       },
       { path: 'settings', component: SettingsComponent },
       { path: 'aboutus', component: AboutusComponent }
     ]
-  }
+  },
   
-  // {path:'**', redirectTo:'app', pathMatch:'full'}
+  {path:'**', redirectTo:'app/home', pathMatch:'full'}
 ];
 
 @NgModule({

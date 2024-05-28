@@ -12,6 +12,7 @@ import { NavbarModule } from './common/navbar/navbar-module/navbar/navbar.module
 import { SettingsComponent } from './home/settings/settings.component';
 import { AboutusComponent } from './home/aboutus/aboutus.component';
 import { TableComponent } from './home/table/table.component';
+import { PageListComponent } from './home/page-list/page-list.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TableComponent } from './home/table/table.component';
     SettingsComponent,
     AboutusComponent,
     TableComponent,
+    PageListComponent,
   ],
   imports: [
     BrowserModule,

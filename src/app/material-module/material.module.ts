@@ -39,6 +39,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
 import { TableComponent } from '../home/table/table.component';
 // import { MatPaginatorM } from '@angular/material/paginator';
 

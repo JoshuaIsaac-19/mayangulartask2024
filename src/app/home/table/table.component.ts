@@ -4,8 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
+import { DialogService } from 'src/app/common/services/dialog.service';
 // let obj2 = _.cloneDeep(obj);
 export interface PeriodicElement {
+  [x: string]: any;
   name: string;
   position: number;
   weight: number;
@@ -21,7 +23,9 @@ export interface PeriodicElement {
 })
 export class TableComponent implements AfterViewInit, OnInit {
 
-  constructor(public openDialog: MatDialog){}
+  constructor(
+    public openDialog: MatDialog, 
+    private dialogService: DialogService){}
 
   ELEMENT_DATA: PeriodicElement[] = [
     {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', availability: "Available", status:true},
@@ -91,26 +95,17 @@ export class TableComponent implements AfterViewInit, OnInit {
     this.dataSource.sort = this.sort;
   }
   onDeleteTableElement(element: PeriodicElement){
-    // console.log(element);
-    const dialogBox= this.openDialog.open(this.delete,{  
-      width:'400px',
-      autoFocus:false
-    });
+
+    const dialogBox= this.dialogService.openConfirmationDialog('Nothing');
     dialogBox.afterClosed().subscribe(response =>{
       if(response){
-        // console.log(responseresponse)
-        // console.log('before', this.ELEMENT_DATA[element.position-1]);
-        console.log('before', _.cloneDeep(this.ELEMENT_DATA));
         element.status=false;
-        // this.ELEMENT_DATA[element.position-1].status=false;
-        // console.log('after', this.ELEMENT_DATA[element.position-1]);
-        console.log('after', this.ELEMENT_DATA);
-        // element.status=false;
         const lowDegreeFilter= this.ELEMENT_DATA.filter(item=>item.status === true)
         this.dataSource= new MatTableDataSource<PeriodicElement>(lowDegreeFilter)
-        this.dataSource.paginator= this.paginator;
+        this.dataSource.paginator= this.paginator
       }
       console.log('response: ', response)
     })
   }
+
 }

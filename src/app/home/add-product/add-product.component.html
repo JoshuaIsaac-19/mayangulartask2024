@@ -1,0 +1,36 @@
+<button mat-mini-fab matTooltip="Add New Product" (click)="addNewProduct()" color="dark" class="add-new-product-button"><mat-icon>add</mat-icon></button>
+
+<ng-template #addNewProductTemplate> 
+    <h3 mat-dialog-title> Add Product</h3>
+    <mat-dialog-content class="mat-typography">
+        <form [formGroup]="newProductForm">
+          <mat-form-field class="example-full-width">
+          <mat-label for="product-name">Product Name: </mat-label>
+          <input matInput id="product-name" formControlName="productName"><br>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label for="weight">Weight: </mat-label>
+            <input matInput id="weight" formControlName="weight"><br>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label for="symbol">Symbol: </mat-label>
+            <input matInput id="symbol" formControlName="symbol"><br>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label for="availability">Status: </mat-label>
+            <mat-select formControlName="availability">
+              <mat-option value="available">Available</mat-option>
+              <mat-option value="notavailable">Not Available</mat-option>
+            </mat-select>
+            </mat-form-field>
+        </form>
+  
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-stroked-button [mat-dialog-close]="false">Cancel</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="true">Save</button>
+    </mat-dialog-actions>
+  </ng-template>

@@ -1,7 +1,5 @@
-import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { MaterialModule } from 'src/app/material-module/material.module';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({

@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-// import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -40,8 +39,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
-import { TableComponent } from '../home/table/table.component';
-// import { MatPaginatorM } from '@angular/material/paginator';
+import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
 
 @NgModule({
   declarations: [
@@ -81,10 +79,10 @@ import { TableComponent } from '../home/table/table.component';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-  
-
     
-  ],exports:[
+  ],
+  
+  exports:[
     MatFormFieldModule,
     MatToolbarModule,
     MatIconModule,
@@ -117,6 +115,9 @@ import { TableComponent } from '../home/table/table.component';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule
+  ],
+  entryComponents:[
+    DialogBoxComponent
   ]
 })
 export class MaterialModule { }

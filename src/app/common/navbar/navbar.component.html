@@ -22,8 +22,6 @@
     </button> 
   </mat-toolbar>
 
-  <!-- <button (click)="addNewTask()"><mat-icon >add</mat-icon></button> -->
-
   <ng-template #homeRaised1>
     <button mat-raised-button
             (click)="toggleActive(menuHome)">
@@ -44,41 +42,5 @@
       {{menuSettings}}
     </button>
   </ng-template>
-
-  <!-- <ng-template #addTask> 
-    <h2 mat-dialog-title> Add Task</h2>
-    <mat-dialog-content class="mat-typography">
-        <form [formGroup]="newTaskForm">
-          <mat-form-field appearance="outline">
-          <mat-label for="task-name">Task Name: </mat-label>
-          <input matInput id="task-name" formControlName="taskName"><br>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label for="status">Status: </mat-label>
-            <mat-select formControlName="status">
-              <mat-option value="ontime">On Time</mat-option>
-              <mat-option value="inprogress">In Progress</mat-option>
-              <mat-option value="closed">Closed</mat-option>
-            </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="example-full-width">
-              <mat-label>Due Date</mat-label>
-              <input matInput [matDatepicker]="picker" formControlName="dueDate" >
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="picker">
-                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-              </mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </form>
-  
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-stroked-button [mat-dialog-close]="false">Cancel</button>
-      <button mat-raised-button color="primary" [mat-dialog-close]="true">Save</button>
-    </mat-dialog-actions>
-  </ng-template> -->
 
 <router-outlet></router-outlet>

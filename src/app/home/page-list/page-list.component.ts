@@ -28,7 +28,6 @@ export class PageListComponent {
   onActionEmit(event: any){
     // console.log('event' ,event)
     if(this.selectedChip!==event){
-
       console.log('onActionEmit', event);
       this.selectedChip=event;
       this.actionEmit.emit(event)

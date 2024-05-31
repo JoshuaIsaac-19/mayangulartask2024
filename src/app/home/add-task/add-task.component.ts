@@ -22,7 +22,6 @@ export class AddTaskComponent implements OnInit{
       });
     }
 
-
   addNewTask(){
     console.log("AddTask Button Clicked");
     const dialogRef=this.openDialog.open(this.addaNewTask, {

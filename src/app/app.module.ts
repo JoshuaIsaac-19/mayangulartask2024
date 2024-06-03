@@ -13,6 +13,7 @@ import { TableComponent } from './home/table/table.component';
 import { PageListComponent } from './home/page-list/page-list.component';
 import { AddProductComponent } from './home/add-product/add-product.component';
 import { FormComponent } from './home/form/form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FormComponent } from './home/form/form.component';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    NavbarModule
+    NavbarModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

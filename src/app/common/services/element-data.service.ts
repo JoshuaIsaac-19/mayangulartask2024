@@ -1,18 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { PeriodicElement } from 'src/app/home/table/table.component';
+import { PeriodicElement, ProductList } from 'src/app/home/table/table.component';
 
 @Injectable({
   providedIn: 'root'  
 })
-export class ElementDataService implements OnInit{
+export class ElementDataService{
+  
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
-
-  elementAdded = new EventEmitter<void>();
 
   ELEMENT_DATA: PeriodicElement[] = [
     {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', availability: "Available", status:true},
@@ -39,23 +39,27 @@ export class ElementDataService implements OnInit{
  
   dataSource = new MatTableDataSource<PeriodicElement>();
 
-  ngOnInit(): void {
-    const filterValue= this.ELEMENT_DATA.filter(item=>item.status === true)
-    this.dataSource= new MatTableDataSource<PeriodicElement>(filterValue);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  constructor(
+    private httpClient:HttpClient
+  ) {}
+
   getElements(): PeriodicElement[] {
     return this.ELEMENT_DATA;
   }
-
-  addElement(element: PeriodicElement): void {
+  addElement(element:PeriodicElement):void {
+    // return this.httpClient.get('http://localhost:5000/v1/product');
     this.ELEMENT_DATA.push(element);
-    this.elementAdded.emit();
+    // this.elementAdded.emit();
   }
 
+  addProduct(product:object) {
+    console.log(`'http://localhost:5000/v1/product'`,product)
+    return this.httpClient.post(('http://localhost:5000/v1/product'),product);
+  }
+  getProductDetails(){
+    return this.httpClient.get('http://localhost:5000/v1/product');
+  }
+  softDeleteProductList(id:object){
+    return this.httpClient.delete('http://localhost:5000/v1/product',id )
+  }
 }

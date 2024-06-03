@@ -82,12 +82,11 @@ export class TableComponent implements AfterViewInit, OnInit {
       price:['']
     })
     this.editProductListForm= this.fb.group({
-      id:[''],
+      productId:[''],
       productName:[''],
       description:[''],
       price:['']
     })
-
 
     this.ELEMENT_DATA = this.elementDataService.getElements();
     const filterValue= this.ELEMENT_DATA.filter(item=>item.status === true)
@@ -95,6 +94,13 @@ export class TableComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort; 
     console.log('ngOnInit ended');
+  }
+
+  exampleFormData:ProductList={
+    id: 99,
+    name: 'Sample Name',
+    description: 'Sample Description',
+    price: 130
   }
 
   openSnackBar(message:string) {
@@ -161,7 +167,9 @@ export class TableComponent implements AfterViewInit, OnInit {
               this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
               this.productSource.paginator= this.paginator
               this.productSource.sort= this.sort;
-              if(length>(this.PRODUCTS_DATA).length){
+              if(length<(this.PRODUCTS_DATA).length){
+                console.log('length', length)
+                console.log('this.PRODUCTS_DATA', (this.PRODUCTS_DATA).length);
                 this.openSnackBar('The Product has been added, Successfully');
               }
               else{
@@ -174,6 +182,30 @@ export class TableComponent implements AfterViewInit, OnInit {
       }
 
     })
+  }
+
+  async editProductList(element:ProductList){
+    await this.editProductListForm.patchValue({
+      productId: element.id,
+      productName: element.name,
+      description: element.description,
+      price: element.price
+    });
+    //I can access it here when I console it.
+    console.log('this.editProductListForm while edit button is clicked', this.editProductListForm.value);
+    const dialogBox=this.openDialog.open(this.editProduct, {
+      autoFocus:false,
+      width:'400px',
+      panelClass:'new-task-form-color'
+    });
+    dialogBox.afterClosed().subscribe(response =>{
+      if(response){
+        // this is where I should write code for my edit product
+        console.log(this.editProductListForm.value);
+      }
+      
+    })
+
   }
 
   onDeleteTableElement(element: ProductList){
@@ -204,7 +236,6 @@ export class TableComponent implements AfterViewInit, OnInit {
         this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
         this.productSource.paginator= this.paginator
         this.productSource.sort= this.sort;
-        // this.openSnackBar('The product has been deleted');
       }
       console.log('response: ', response)
     })

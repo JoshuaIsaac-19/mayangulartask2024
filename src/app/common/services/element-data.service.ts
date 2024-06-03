@@ -10,6 +10,7 @@ import { PeriodicElement, ProductList } from 'src/app/home/table/table.component
 })
 export class ElementDataService{
   
+  private apiUrl = 'http://localhost:5000/v1/product';
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -53,13 +54,13 @@ export class ElementDataService{
   }
 
   addProduct(product:object) {
-    console.log(`'http://localhost:5000/v1/product'`,product)
-    return this.httpClient.post(('http://localhost:5000/v1/product'),product);
+    console.log(this.apiUrl,product)
+    return this.httpClient.post((this.apiUrl),product);
   }
   getProductDetails(){
-    return this.httpClient.get('http://localhost:5000/v1/product');
+    return this.httpClient.get(this.apiUrl);
   }
-  softDeleteProductList(id:object){
-    return this.httpClient.delete('http://localhost:5000/v1/product',id )
+  deleteProductList(id:string){
+    return this.httpClient.delete(`${this.apiUrl}/${id}`)
   }
 }

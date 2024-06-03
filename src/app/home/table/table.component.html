@@ -4,6 +4,7 @@
   <!-- <app-add-product></app-add-product> -->
   <button mat-mini-fab matTooltip="Add New Product" (click)="addNewProductList()" color="dark" class="add-new-product-button"><mat-icon>add</mat-icon></button>
 
+      <!-- Add New Product Template -->
       <ng-template #addNewProductTemplate> 
       <h3 mat-dialog-title> Add Product</h3>
       <mat-dialog-content class="mat-typography">
@@ -32,6 +33,36 @@
         <button mat-raised-button color="primary" [mat-dialog-close]="true">Save</button>
       </mat-dialog-actions>
       </ng-template>
+
+      <!-- Edit Product Template -->
+      <ng-template #editProductTemplate> 
+        <h3 mat-dialog-title> Edit Product</h3>
+        <mat-dialog-content class="mat-typography">
+            <form [formGroup]="newProductListForm">
+  
+              <mat-form-field class="example-full-width">
+              <mat-label for="product-name">Product Name: </mat-label>
+              <input matInput id="product-name" formControlName="productName"><br>
+              </mat-form-field>
+  
+              <mat-form-field class="example-full-width">
+                <mat-label for="description">Description: </mat-label>
+                <input matInput id="description" formControlName="description"><br>
+              </mat-form-field>
+  
+              <mat-form-field class="example-full-width">
+                <mat-label for="price">Price: </mat-label>
+                <input matInput id="price" formControlName="price"><br>
+              </mat-form-field>
+  
+            </form>
+        </mat-dialog-content>
+        
+        <mat-dialog-actions align="end">
+          <button mat-stroked-button [mat-dialog-close]="false">Cancel</button>
+          <button mat-raised-button color="primary" [mat-dialog-close]="true">Save</button>
+        </mat-dialog-actions>
+        </ng-template>
 
   <!-- /// -->
   <div class="mat-elevation-z4">

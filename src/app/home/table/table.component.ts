@@ -19,6 +19,7 @@ export interface PeriodicElement {
 }
 
 export interface ProductList{
+  id:number,
   name:string,
   description:string,
   price:number
@@ -40,6 +41,8 @@ export class TableComponent implements AfterViewInit, OnInit {
   ) {}
 
   newProductListForm!:FormGroup;
+  editProductListForm!:FormGroup;
+  
   ELEMENT_DATA: PeriodicElement[] = [];
   PRODUCTS_DATA: ProductList[]= [];
 
@@ -52,6 +55,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild('delete', {static:true}) delete!: TemplateRef<any>
   @ViewChild('addNewProductTemplate',{ static:true }) addaNewProduct!:TemplateRef<any>
+  @ViewChild('editProductTemplate', {static:true}) editProduct!:TemplateRef<any>
 
   title='Chemicals';
   description= `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
@@ -77,6 +81,13 @@ export class TableComponent implements AfterViewInit, OnInit {
       description:[''],
       price:['']
     })
+    this.editProductListForm= this.fb.group({
+      id:[''],
+      productName:[''],
+      description:[''],
+      price:['']
+    })
+
 
     this.ELEMENT_DATA = this.elementDataService.getElements();
     const filterValue= this.ELEMENT_DATA.filter(item=>item.status === true)
@@ -114,7 +125,7 @@ export class TableComponent implements AfterViewInit, OnInit {
     if(event.value==='all'){
       this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
     } else if(event.value==='<50'){
-      const belowFiftyFilter= this.PRODUCTS_DATA.filter(item=> item.price<50)
+      const belowFiftyFilter= this.PRODUCTS_DATA.filter(item=>item.price<50 )
       this.productSource= new MatTableDataSource<ProductList>(belowFiftyFilter)
       console.log('belowFiftyFilter ',belowFiftyFilter)
     }else if(event.value==='>50'){
@@ -134,6 +145,7 @@ export class TableComponent implements AfterViewInit, OnInit {
     });
     dialogBox.afterClosed().subscribe(response =>{
       if(response){
+        const length= this.PRODUCTS_DATA.length;
         const newProduct={
           name:this.newProductListForm.value.productName,
           description:this.newProductListForm.value.description,
@@ -141,57 +153,60 @@ export class TableComponent implements AfterViewInit, OnInit {
         }
         console.log('newProduct', newProduct);
         this.elementDataService.addProduct(newProduct).subscribe((productAddedData:any)=>{
+          if(productAddedData && productAddedData.success){
+            this.elementDataService.getProductDetails().subscribe((data:any)=>{
+              console.log('before this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
+              this.PRODUCTS_DATA=data.productList.rows;
+              console.log('after this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
+              this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
+              this.productSource.paginator= this.paginator
+              this.productSource.sort= this.sort;
+              if(length>(this.PRODUCTS_DATA).length){
+                this.openSnackBar('The Product has been added, Successfully');
+              }
+              else{
+                this.openSnackBar('Something went wrong, try again!');
+              }
+            })
+          }
           console.log('product added data', productAddedData);
         });
       }
-      this.elementDataService.getProductDetails().subscribe((data:any)=>{
-        console.log('before ', this.PRODUCTS_DATA);
-        this.PRODUCTS_DATA=data
-        console.log('after ', this.PRODUCTS_DATA);
-      })
-      this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
-      this.productSource.paginator= this.paginator
-      this.productSource.sort= this.sort;
-      this.openSnackBar('The Product has been added');
+
     })
   }
 
-  onDeleteTableElement(element: PeriodicElement){
+  onDeleteTableElement(element: ProductList){
+    console.log('element on tableElement', element.id);
     const dialogBox= this.dialogService.openConfirmationDialog('Confirmation');
     dialogBox.afterClosed().subscribe(response =>{
       if(response){
-        this.elementDataService.getProductDetails().subscribe((data:any)=>{
-          console.log('before ', this.PRODUCTS_DATA);
-          this.PRODUCTS_DATA=data
-          console.log('after ', this.PRODUCTS_DATA);
+        const id=element.id;
+        this.elementDataService.deleteProductList((id).toString()).subscribe((deletedData:any)=>{
+          console.log('deletedData',deletedData);
+          if(deletedData && deletedData.success){
+            this.elementDataService.getProductDetails().subscribe((data:any)=>{
+              console.log('before this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
+              this.PRODUCTS_DATA=data.productList.rows;
+              console.log('after this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
+              this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
+              this.productSource.paginator= this.paginator
+              this.productSource.sort= this.sort;
+              if(length<(this.PRODUCTS_DATA).length){
+                this.openSnackBar('The Product has been deleted, Successfully!');
+              }
+              else{
+                this.openSnackBar('Something went wrong, try again!');
+              }
+            })
+          }
         })
         this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
         this.productSource.paginator= this.paginator
         this.productSource.sort= this.sort;
-        this.openSnackBar('The product has been deleted');
+        // this.openSnackBar('The product has been deleted');
       }
       console.log('response: ', response)
     })
   }
-  // softDeleteProduct(element:ProductList){
-  //   const dialogBox= this.dialogService.openConfirmationDialog('Confirmation');
-  //   console.log('product element ',element);
-  //   dialogBox.afterClosed().subscribe(response =>{
-  //     if(response){
-  //       this.elementDataService.softDeleteProductList({id:element.id}).subscribe((data:any)=>{
-  //         console.log('deleteProductListRes', data)
-  //       })
-  //       this.elementDataService.getProductDetails().subscribe((data:any)=>{
-  //         if(data && data.productList && data.productList.count && data.productList.rows){
-  //           this.PRODUCTS_DATA=data.productList.rows;
-  //         }
-  //         this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA);
-  //         this.productSource.paginator = this.paginator;
-  //         this.productSource.sort = this.sort; 
-  //       });
-  //       this.openSnackBar();
-  //     }
-  //     console.log('response: ', response)
-  //   })
-  // }
 }

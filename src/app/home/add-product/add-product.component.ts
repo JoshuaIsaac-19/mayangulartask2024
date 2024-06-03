@@ -53,26 +53,26 @@ export class AddProductComponent implements OnInit,AfterViewInit{
     this.dataSource.data = filteredData;
   }
 
-  addNewProductList(){
-    const dialogBox=this.openDialog.open(this.addaNewProduct, {
-      autoFocus:false,
-      width:'400px',
-      panelClass:'new-task-form-color'
-    });
-    dialogBox.afterClosed().subscribe(response =>{
-      if(response){
-        const newProduct: ProductList={
-          name:this.newProductListForm.value.productName,
-          description:this.newProductListForm.value.description,
-          price:this.newProductListForm.value.price
-        }
-        console.log('newProduct', newProduct);
-        this.elementDataService.addProduct(newProduct).subscribe((productAddedData:any)=>{
-          console.log('product added data', productAddedData);
-        });
-      }
-    })
-  }
+  // addNewProductList(){
+  //   const dialogBox=this.openDialog.open(this.addaNewProduct, {
+  //     autoFocus:false,
+  //     width:'400px',
+  //     panelClass:'new-task-form-color'
+  //   });
+  //   dialogBox.afterClosed().subscribe(response =>{
+  //     if(response){
+  //       const newProduct: ProductList={
+  //         name:this.newProductListForm.value.productName,
+  //         description:this.newProductListForm.value.description,
+  //         price:this.newProductListForm.value.price
+  //       }
+  //       console.log('newProduct', newProduct);
+  //       this.elementDataService.addProduct(newProduct).subscribe((productAddedData:any)=>{
+  //         console.log('product added data', productAddedData);
+  //       });
+  //     }
+  //   })
+  // }
 
   // addNewProduct(){
   //   const dialogBox=this.openDialog.open(this.addaNewProduct, {

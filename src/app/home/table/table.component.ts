@@ -8,22 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as _ from 'lodash';
 import { DialogService } from 'src/app/common/services/dialog.service';
 import { ElementDataService } from 'src/app/common/services/element-data.service';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-  availability:string;
-  status: boolean;
-}
-
-export interface ProductList{
-  id:number,
-  name:string,
-  description:string,
-  price:number
-}
+import { ProductList, EventValue, EditedDataValue, UpdatedDataResponse, getProductList, AddProductResponse, DeletedProductResponse } from '../modals/common.home';
 
 @Component({
   selector: 'app-table',
@@ -43,12 +28,13 @@ export class TableComponent implements AfterViewInit, OnInit {
   newProductListForm!:FormGroup;
   editProductListForm!:FormGroup;
   
-  ELEMENT_DATA: PeriodicElement[] = [];
   PRODUCTS_DATA: ProductList[]= [];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'availability', 'action'];
   displayedProductColumns:string[]= ['id', 'name', 'description', 'price', 'action'];
-  dataSource = new MatTableDataSource<PeriodicElement>();
+
+  editFormDynamicIdValue:number= -1;
+  editFormDynamicNameValue:string='';
+
   productSource= new MatTableDataSource<ProductList>();
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -58,17 +44,12 @@ export class TableComponent implements AfterViewInit, OnInit {
   @ViewChild('editProductTemplate', {static:true}) editProduct!:TemplateRef<any>
 
   title='Chemicals';
-  description= `Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
-    took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
-    but also the leap into electronic typesetting, remaining essentially unchanged.`
+  description= ``
 
-  actionArray=[{ label:'Available', value:'Available'},{ label:'Not Available', value:'Not available'},{label:'All', value:'all'}]
   produtActionArray=[{label:'All', value: 'all'}, {label: 'Below 50', value: '<50'},{label: 'Above 50', value:'>50'}]
 
   ngOnInit() {
-    console.log('ngOnInit started');
-    this.elementDataService.getProductDetails().subscribe((data:any)=>{
+    this.elementDataService.getProductDetails().subscribe((data:getProductList)=>{
       if(data && data.productList && data.productList.count && data.productList.rows){
         this.PRODUCTS_DATA=data.productList.rows;
       }
@@ -82,25 +63,9 @@ export class TableComponent implements AfterViewInit, OnInit {
       price:['']
     })
     this.editProductListForm= this.fb.group({
-      productId:[''],
-      productName:[''],
       description:[''],
       price:['']
     })
-
-    this.ELEMENT_DATA = this.elementDataService.getElements();
-    const filterValue= this.ELEMENT_DATA.filter(item=>item.status === true)
-    this.dataSource= new MatTableDataSource<PeriodicElement>(filterValue)
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort; 
-    console.log('ngOnInit ended');
-  }
-
-  exampleFormData:ProductList={
-    id: 99,
-    name: 'Sample Name',
-    description: 'Sample Description',
-    price: 130
   }
 
   openSnackBar(message:string) {
@@ -112,32 +77,22 @@ export class TableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.productSource.paginator= this.paginator;
     this.productSource.sort =this.sort;
-
-    this.dataSource.paginator = this.paginator;
-    console.log('Paginator ngAfterViewInit:', this.paginator);
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
     const productFilterValues= (event.target as HTMLInputElement).value;
     this.productSource.filter= productFilterValues.trim().toLowerCase();
   }
 
-  onEmit(event:any){
-    console.log('onEmit', event);
+  onEmit(event:EventValue){
     if(event.value==='all'){
       this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
     } else if(event.value==='<50'){
       const belowFiftyFilter= this.PRODUCTS_DATA.filter(item=>item.price<50 )
       this.productSource= new MatTableDataSource<ProductList>(belowFiftyFilter)
-      console.log('belowFiftyFilter ',belowFiftyFilter)
     }else if(event.value==='>50'){
       const aboveFiftyFilter= this.PRODUCTS_DATA.filter(item=> item.price>50)
       this.productSource= new MatTableDataSource<ProductList>(aboveFiftyFilter)
-      console.log('aboveFiftyFilter', aboveFiftyFilter);
     }
     this.productSource.paginator= this.paginator;
     this.productSource.sort = this.sort;
@@ -149,7 +104,7 @@ export class TableComponent implements AfterViewInit, OnInit {
       width:'400px',
       panelClass:'new-task-form-color'
     });
-    dialogBox.afterClosed().subscribe(response =>{
+    dialogBox.afterClosed().subscribe((response:boolean) =>{
       if(response){
         const length= this.PRODUCTS_DATA.length;
         const newProduct={
@@ -157,19 +112,14 @@ export class TableComponent implements AfterViewInit, OnInit {
           description:this.newProductListForm.value.description,
           price:this.newProductListForm.value.price
         }
-        console.log('newProduct', newProduct);
-        this.elementDataService.addProduct(newProduct).subscribe((productAddedData:any)=>{
+        this.elementDataService.addProduct(newProduct).subscribe((productAddedData:AddProductResponse)=>{
           if(productAddedData && productAddedData.success){
-            this.elementDataService.getProductDetails().subscribe((data:any)=>{
-              console.log('before this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
+            this.elementDataService.getProductDetails().subscribe((data:getProductList)=>{
               this.PRODUCTS_DATA=data.productList.rows;
-              console.log('after this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
               this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
               this.productSource.paginator= this.paginator
               this.productSource.sort= this.sort;
               if(length<(this.PRODUCTS_DATA).length){
-                console.log('length', length)
-                console.log('this.PRODUCTS_DATA', (this.PRODUCTS_DATA).length);
                 this.openSnackBar('The Product has been added, Successfully');
               }
               else{
@@ -180,32 +130,58 @@ export class TableComponent implements AfterViewInit, OnInit {
           console.log('product added data', productAddedData);
         });
       }
-
     })
   }
 
   async editProductList(element:ProductList){
-    await this.editProductListForm.patchValue({
-      productId: element.id,
-      productName: element.name,
-      description: element.description,
-      price: element.price
-    });
-    //I can access it here when I console it.
-    console.log('this.editProductListForm while edit button is clicked', this.editProductListForm.value);
+    this.editFormDynamicIdValue=element.id; 
+    this.editFormDynamicNameValue= element.name;
     const dialogBox=this.openDialog.open(this.editProduct, {
       autoFocus:false,
       width:'400px',
       panelClass:'new-task-form-color'
     });
-    dialogBox.afterClosed().subscribe(response =>{
+    dialogBox.afterClosed().subscribe(async response =>{
       if(response){
-        // this is where I should write code for my edit product
-        console.log(this.editProductListForm.value);
-      }
-      
+        let dataSame= element.description==this.editProductListForm.value.description && element.price==this.editProductListForm.value.price;
+        console.log('dataSame',dataSame);
+        let noData= this.editProductListForm.value.description=='' && this.editProductListForm.value.price =='';
+        console.log('noData', noData);
+        let notNull= this.editProductListForm.value.description==null && this.editProductListForm.value.price ==null;
+        console.log('notNull', notNull);
+        if((dataSame) || (noData) || (notNull)){
+          console.log('No data to change');
+          this.openSnackBar('No changes found')
+        }
+        else{
+          console.log('Changes found and update is about to be called!');
+          const editedDataValues:EditedDataValue={
+            description:this.editProductListForm.value.description ? this.editProductListForm.value.description: element.description,
+            price: this.editProductListForm.value.price ? this.editProductListForm.value.price : element.price
+          }
+          await this.elementDataService.updateProductList(element.id.toString(),editedDataValues).subscribe(async (data:UpdatedDataResponse)=>{
+            console.log('update raw data', data);
+            if(data && data.success && data.updateStatus){
+              console.log('reached getAll products for update');
+              await this.elementDataService.getProductDetails().subscribe((data:getProductList)=>{
+                console.log('before this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
+                this.PRODUCTS_DATA=data.productList.rows;
+                console.log('after this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
+                this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
+                this.productSource.paginator= this.paginator
+                this.productSource.sort= this.sort;
+                this.openSnackBar('Successfully Updated!');
+              })
+            }
+            else{
+              this.openSnackBar('Something went wrong while updating!');
+            }
+          })
+          console.log('editedDataValues ',editedDataValues);
+        }
+      }   
     })
-
+    this.editProductListForm.reset();
   }
 
   onDeleteTableElement(element: ProductList){
@@ -214,15 +190,15 @@ export class TableComponent implements AfterViewInit, OnInit {
     dialogBox.afterClosed().subscribe(response =>{
       if(response){
         const id=element.id;
-        this.elementDataService.deleteProductList((id).toString()).subscribe((deletedData:any)=>{
+        this.elementDataService.deleteProductList((id).toString()).subscribe((deletedData:DeletedProductResponse)=>{
           console.log('deletedData',deletedData);
           if(deletedData && deletedData.success){
-            this.elementDataService.getProductDetails().subscribe((data:any)=>{
+            this.elementDataService.getProductDetails().subscribe((data:getProductList)=>{
               console.log('before this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
               this.PRODUCTS_DATA=data.productList.rows;
               console.log('after this.PRODUCT_DATA', (this.PRODUCTS_DATA).length);
-              this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA)
-              this.productSource.paginator= this.paginator
+              this.productSource= new MatTableDataSource<ProductList>(this.PRODUCTS_DATA);
+              this.productSource.paginator= this.paginator;
               this.productSource.sort= this.sort;
               if(length<(this.PRODUCTS_DATA).length){
                 this.openSnackBar('The Product has been deleted, Successfully!');

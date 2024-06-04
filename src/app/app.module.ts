@@ -11,7 +11,6 @@ import { SettingsComponent } from './home/settings/settings.component';
 import { AboutusComponent } from './home/aboutus/aboutus.component';
 import { TableComponent } from './home/table/table.component';
 import { PageListComponent } from './home/page-list/page-list.component';
-import { AddProductComponent } from './home/add-product/add-product.component';
 import { FormComponent } from './home/form/form.component';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -25,7 +24,6 @@ import { HttpClientModule } from '@angular/common/http';
     AboutusComponent,
     TableComponent,
     PageListComponent,
-    AddProductComponent,
     FormComponent,
   ],
   imports: [

@@ -40,6 +40,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,7 @@ import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    
+    FormsModule
   ],
   
   exports:[
@@ -114,7 +115,8 @@ import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
     MatSnackBarModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule
   ],
   entryComponents:[
     DialogBoxComponent

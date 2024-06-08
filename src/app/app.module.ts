@@ -13,6 +13,7 @@ import { TableComponent } from './home/table/table.component';
 import { PageListComponent } from './home/page-list/page-list.component';
 import { FormComponent } from './home/form/form.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HighlightPipe } from './common/highlight.pipe';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
     TableComponent,
     PageListComponent,
     FormComponent,
+    HighlightPipe,
   ],
   imports: [
     BrowserModule,

@@ -1,1 +1,9 @@
-<p>settings works!</p>
+<div class="container">
+  <div class="page-container">
+    <label for="search-term">Search</label>
+    <input placeholder="Enter term" (input)="updateSearch($event)" id="search-term">
+    <div *ngFor="let result of results" [innerHTML]="result.summary | highlight: searchTerm"></div>
+  </div>
+</div>
+
+<div [ngClass]="isSpecial? 'isSpecial?': 'test'">This div is special like you</div>

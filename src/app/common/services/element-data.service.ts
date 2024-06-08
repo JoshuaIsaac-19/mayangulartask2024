@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class ElementDataService{
   
-  private apiUrl = 'http://localhost:5000/v1/product';
+  private apiUrl = 'http://localhost:5010/v1/product';
 
   constructor( private httpClient:HttpClient ) {}
 

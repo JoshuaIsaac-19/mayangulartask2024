@@ -43,8 +43,7 @@ import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     MatFormFieldModule,

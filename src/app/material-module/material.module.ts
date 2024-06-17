@@ -37,7 +37,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // Material Data tables
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 
 import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
 import { FormsModule } from '@angular/forms';

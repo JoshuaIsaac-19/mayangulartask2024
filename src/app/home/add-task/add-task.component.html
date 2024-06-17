@@ -4,7 +4,7 @@
     <h3 mat-dialog-title> Add Task</h3>
     <mat-dialog-content class="mat-typography">
         <form [formGroup]="newTaskForm">
-          <mat-form-field appearance="outline">
+          <mat-form-field class="example-full-width">
           <mat-label for="task-name">Task Name: </mat-label>
           <input matInput id="task-name" formControlName="taskName"><br>
           </mat-form-field>
@@ -14,7 +14,7 @@
             <textarea matInput placeholder="" formControlName="description"></textarea>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field class="example-full-width">
             <mat-label for="status">Status: </mat-label>
             <mat-select formControlName="status">
               <mat-option value="ontime">On Time</mat-option>
@@ -23,7 +23,7 @@
             </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field class="example-full-width">
               <mat-label for="status">Priority: </mat-label>
               <mat-select formControlName="priority">
                 <mat-option value="low">Low</mat-option>
@@ -32,9 +32,9 @@
               </mat-select>
               </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field class="example-full-width">
               <mat-label>Due Date</mat-label>
-              <input matInput [matDatepicker]="picker" formControlName="dueDate" >
+              <input matInput [matDatepicker]="picker" formControlName="dueDate">
               <mat-hint>MM/DD/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="picker">
                 <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>

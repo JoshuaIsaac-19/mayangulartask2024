@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'app', component: NavbarComponent, children: [
       {
-        path: 'home', component:TableComponent ,children: [
+        path: 'home',component:ContentComponent, children: [
           { path: '', component: AddTaskComponent},
         ]
       },
@@ -19,7 +19,6 @@ const routes: Routes = [
       { path: 'aboutus', component: AboutusComponent }
     ]
   },
-  
   {path:'**', redirectTo:'app/home', pathMatch:'full'}
 ];
 

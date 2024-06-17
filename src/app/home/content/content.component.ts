@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class ContentComponent {
   exists: boolean=true;
-  taskContent:{title:string,description:string, status:string, priority:string}={
+  taskContent:{title:string, description:string, status:string, priority:string}={
     title: 'React',
     description: 'Just a description',
     status: 'In progress',
@@ -17,13 +17,13 @@ export class ContentComponent {
   moreTaskContent:{title:string, description:string, status:string, priority:string}[]=
   [{
       title: 'Angular',
-      description: 'This is a random description for a task tracker. Prettry weird.',
+      description: 'This is a random description for a task tracker. Pretty weird.',
       status: 'Completed',
       priority: 'Very High'
     },
     {
       title: 'Node JS',
-      description: 'This is a random description for a task tracker. Prettry weird for Node JS.',
+      description: 'This is a random description for a task tracker. Pretty weird for Node JS.',
       status: 'Completed',
       priority: 'Medium'
     },
@@ -35,9 +35,3 @@ export class ContentComponent {
     }
   ]
 }
-
-  // categories: { name: string, items: string[] }[] = [
-  //   { name: 'Category 1', items: ['Item 1.1', 'Item 1.2'] },
-  //   { name: 'Category 2', items: ['Item 2.1', 'Item 2.2', 'Item 2.3'] }
-  // ];
-

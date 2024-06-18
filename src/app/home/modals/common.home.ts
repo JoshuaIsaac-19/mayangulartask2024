@@ -40,3 +40,24 @@ export interface DeletedProductResponse{
   deleteStatus:boolean
 }
 
+export interface RawTaskStructure{
+  id: number,
+  userId:number,
+  taskName: string,
+  description:string,
+  status:string,
+  priority:string,
+  dueDate:Date,
+  isDeleted:boolean,
+  createdAt:Date,
+  modifiedAt:Date
+}
+
+export interface TaskStructure{
+  id: number,
+  taskName:string,
+  description: string,
+  status:string,
+  priority:string,
+  dueDate:Date
+}

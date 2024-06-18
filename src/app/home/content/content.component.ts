@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+// import { AddTaskComponent } from '../add-task/add-task.component';
 
 @Component({
   selector: 'app-content',
@@ -6,7 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent {
-  exists: boolean=true;
+
+  exists: boolean= true;
+
   taskContent:{title:string, description:string, status:string, priority:string}={
     title: 'React',
     description: 'Just a description',

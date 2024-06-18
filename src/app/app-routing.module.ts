@@ -11,8 +11,8 @@ const routes: Routes = [
   {
     path: 'app', component: NavbarComponent, children: [
       {
-        path: 'home',component:ContentComponent, children: [
-          { path: '', component: AddTaskComponent},
+        path: 'home', children: [
+          { path: '', component:ContentComponent},
         ]
       },
       { path: 'settings', component: SettingsComponent },

@@ -14,6 +14,8 @@ import { PageListComponent } from './home/page-list/page-list.component';
 import { FormComponent } from './home/form/form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HighlightPipe } from './common/highlight.pipe';
+import { EditTaskComponent } from './home/edit-task/edit-task.component';
+import { DeleteTaskComponent } from './home/delete-task/delete-task.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { HighlightPipe } from './common/highlight.pipe';
     PageListComponent,
     FormComponent,
     HighlightPipe,
+    EditTaskComponent,
+    DeleteTaskComponent,
   ],
   imports: [
     BrowserModule,

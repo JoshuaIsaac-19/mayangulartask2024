@@ -69,10 +69,9 @@ export class AddTaskComponent implements OnInit{
                 console.log('this.getAllTaskData',this.getAllTaskData);
               }
             })
-            // this.newTaskForm.reset()
+          
           }
         })
-
       }
       console.log('response: ', response)
     })

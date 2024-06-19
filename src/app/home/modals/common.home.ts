@@ -43,14 +43,14 @@ export interface DeletedProductResponse{
 export interface RawTaskStructure{
   id: number,
   userId:number,
-  taskName: string,
-  description:string,
-  status:string,
-  priority:string,
-  dueDate:Date,
+  txt_taskName: string,
+  txt_description:string,
+  txt_status:string,
+  txt_priority:string,
+  date_dueDate:Date,
   isDeleted:boolean,
-  createdAt:Date,
-  modifiedAt:Date
+  date_createdAt:Date,
+  date_modifiedAt:Date
 }
 
 export interface TaskStructure{
@@ -60,4 +60,18 @@ export interface TaskStructure{
   status:string,
   priority:string,
   dueDate:Date
+}
+
+export interface AddTaskResponse{
+  success: boolean,
+  details: RawTaskStructure
+}
+
+//getAllTasksInterface
+export interface GetAllTasks{
+  success: boolean,
+  details:{
+    count:number,
+    rows:RawTaskStructure[]
+  }
 }

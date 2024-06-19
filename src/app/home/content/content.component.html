@@ -2,20 +2,20 @@
 
 <ng-template #cardDataExists>
   <div class="display-in-row">
-    <div  *ngFor="let tasklist of moreTaskContent">
+    <div  *ngFor="let tasklist of getAllTaskData">
       <mat-card class="example-card">
         <mat-card-header>
-          <mat-card-title>{{tasklist.title}}</mat-card-title>
+          <mat-card-title>{{tasklist.txt_taskName}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <p></p>
-            <p>Description: {{tasklist.description}}</p>
+            <p>Description: {{tasklist.txt_description}}</p>
             <p></p>
     
-            <p>Status: {{tasklist.status}}</p>
+            <p>Status: {{tasklist.txt_status}}</p>
             <p></p>
     
-            <p>Priority: {{tasklist.priority}}</p>
+            <p>Priority: {{tasklist.txt_priority}}</p>
             <p></p>
           </mat-card-content>
         <mat-card-actions>

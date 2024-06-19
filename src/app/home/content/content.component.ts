@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TaskService } from 'src/app/common/services/task/task.service';
+import { GetAllTasks, RawTaskStructure } from '../modals/common.home';
+import { Subscription } from 'rxjs';
 // import { AddTaskComponent } from '../add-task/add-task.component';
 
 @Component({
@@ -6,35 +9,25 @@ import { Component } from '@angular/core';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent {
 
-  exists: boolean= true;
+export class ContentComponent implements OnInit{
+  
+  getAllTaskData!: RawTaskStructure[];
+  private taskAddedSubscription!: Subscription;
 
-  taskContent:{title:string, description:string, status:string, priority:string}={
-    title: 'React',
-    description: 'Just a description',
-    status: 'In progress',
-    priority: 'High'
+  constructor(private taskService: TaskService){}
+
+  ngOnInit(): void {
+    this.taskService.getAllTasks().subscribe((data:GetAllTasks)=>{
+      console.log('before data', data);
+      if(data && data.success && data.details.count && data.details.rows){
+        console.log('success')
+        this.getAllTaskData= data.details.rows;
+        console.log('this.getAllTaskData',this.getAllTaskData);
+      }
+    })
   }
 
-  moreTaskContent:{title:string, description:string, status:string, priority:string}[]=
-  [{
-      title: 'Angular',
-      description: 'This is a random description for a task tracker. Pretty weird.',
-      status: 'Completed',
-      priority: 'Very High'
-    },
-    {
-      title: 'Node JS',
-      description: 'This is a random description for a task tracker. Pretty weird for Node JS.',
-      status: 'Completed',
-      priority: 'Medium'
-    },
-    {
-      title: 'Java',
-      description: 'This is a random description for a task tracker. That too for a Java language.',
-      status: 'Completed',
-      priority: 'Low'
-    }
-  ]
+  exists: boolean= true;
+  
 }

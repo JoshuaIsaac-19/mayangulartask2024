@@ -10,13 +10,13 @@ import { EditTaskComponent } from '../edit-task/edit-task.component';
   styleUrls: ['./content.component.scss']
 })
 
-export class ContentComponent implements OnInit,OnDestroy{
-  
+export class ContentComponent implements OnInit, OnDestroy {
+
   getAllTaskData!: RawTaskStructure[];
   private taskAddedSubscription!: Subscription;
-  exists: boolean=false;
+  exists: boolean = false;
 
-  constructor(private taskService: TaskService, public editTask: EditTaskComponent){}
+  constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
     this.getAllTasksData()
@@ -28,30 +28,30 @@ export class ContentComponent implements OnInit,OnDestroy{
     }
   }
 
-  getAllTasksData(){
-    this.taskService.getAllTasks().subscribe((data:GetAllTasks)=>{
+  getAllTasksData() {
+    this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
       console.log('before data', data);
-      if(data && data.success && data.details.count && data.details.rows){
+      if (data && data.success && data.details.count && data.details.rows) {
         console.log('success')
-        this.exists=true;
-        this.getAllTaskData= data.details.rows;
-        console.log('this.getAllTaskData',this.getAllTaskData);
+        this.exists = true;
+        this.getAllTaskData = data.details.rows;
+        console.log('this.getAllTaskData', this.getAllTaskData);
       }
-      else{
-        this.exists=false;
+      else {
+        this.exists = false;
       }
     })
   }
 
-  loadTasksData(){
+  loadTasksData() {
     this.taskAddedSubscription = this.taskService.taskAdded$.subscribe(() => {
-      this.taskService.getAllTasks().subscribe((data:GetAllTasks)=>{
+      this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
         console.log('before data', data);
-        if(data && data.success && data.details.count && data.details.rows){
+        if (data && data.success && data.details.count && data.details.rows) {
           console.log('success')
-          this.exists=true;
-          this.getAllTaskData= data.details.rows;
-          console.log('this.getAllTaskData',this.getAllTaskData);
+          this.exists = true;
+          this.getAllTaskData = data.details.rows;
+          console.log('this.getAllTaskData', this.getAllTaskData);
         }
       })
     });

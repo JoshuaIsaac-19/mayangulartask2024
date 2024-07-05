@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HighlightPipe } from './common/highlight.pipe';
 import { EditTaskComponent } from './home/edit-task/edit-task.component';
 import { DeleteTaskComponent } from './home/delete-task/delete-task.component';
+import { AddEditTaskComponent } from './home/add-edit-task/add-edit-task.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { DeleteTaskComponent } from './home/delete-task/delete-task.component';
     HighlightPipe,
     EditTaskComponent,
     DeleteTaskComponent,
+    AddEditTaskComponent,
   ],
   imports: [
     BrowserModule,

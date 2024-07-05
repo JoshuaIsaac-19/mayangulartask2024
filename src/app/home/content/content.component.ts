@@ -3,6 +3,10 @@ import { TaskService } from 'src/app/common/services/task/task.service';
 import { GetAllTasks, RawTaskStructure } from '../modals/common.home';
 import { Subscription } from 'rxjs';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddTaskComponent } from '../add-task/add-task.component';
+import { DialogBoxComponent } from 'src/app/common/dialog-box/dialog-box.component';
+import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
 
 @Component({
   selector: 'app-content',
@@ -16,10 +20,10 @@ export class ContentComponent implements OnInit, OnDestroy {
   private taskAddedSubscription!: Subscription;
   exists: boolean = false;
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.getAllTasksData()
+    this.getAllTasksData();
     this.loadTasksData();
   }
   ngOnDestroy(): void {
@@ -55,6 +59,17 @@ export class ContentComponent implements OnInit, OnDestroy {
         }
       })
     });
+  }
+
+  editTask() {
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    })
   }
 
 }

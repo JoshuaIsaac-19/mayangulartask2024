@@ -10,22 +10,20 @@ import { MatDialog } from '@angular/material/dialog';
 export class EditTaskComponent {
 
   editTaskForm!: FormGroup;
-  @ViewChild('editTask', {static:true}) editATask!:TemplateRef<any>;
+  @ViewChild('editTask', { static: true }) editATask!: TemplateRef<any>;
 
-  constructor(private openDialog: MatDialog){}
+  constructor(private openDialog: MatDialog) { }
 
-  openEditTask(){
-    const dialogRef=this.openDialog.open(this.editATask, {
-      autoFocus:false,
-      width:'400px',
-      panelClass:'new-task-form-color'
+  openEditTask() {
+    const dialogRef = this.openDialog.open(this.editATask, {
+      autoFocus: false,
+      width: '400px',
+      panelClass: 'new-task-form-color'
     });
-    dialogRef.afterClosed().subscribe(response=>{
-      if(response){
+    dialogRef.afterClosed().subscribe(response => {
+      if (response) {
         console.log(response);
       }
     })
   }
-
- 
 }

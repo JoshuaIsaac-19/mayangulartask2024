@@ -8,17 +8,18 @@ import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 export class DialogService {
 
   constructor(
-    public dialog:MatDialog ) { }
+    public dialog: MatDialog
+  ) { }
 
-  openConfirmationDialog(message:string , className?: string){
-    const dialogBox= this.dialog.open(DialogBoxComponent, {
-      data:{
-        header:'Confirmation',
-        content:message,
-        actionType:'Confirmation'
+  openConfirmationDialog(message?: string, className?: string) {
+    const dialogBox = this.dialog.open(DialogBoxComponent, {
+      data: {
+        header: 'Confirmation',
+        content: message,
+        actionType: 'Confirmation'
       },
-      autoFocus:false
+      autoFocus: false
     });
-    return dialogBox; 
+    return dialogBox;
   }
 }

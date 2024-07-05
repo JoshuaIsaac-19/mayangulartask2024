@@ -39,6 +39,8 @@ export class AddTaskComponent implements OnInit {
     return [year, month, date].join('/');
   }
 
+  // addNewTask() { }
+
   addNewTask() {
     console.log("AddTask Button Clicked");
     const dialogRef = this.openDialog.open(this.addaNewTask, {
@@ -69,7 +71,6 @@ export class AddTaskComponent implements OnInit {
                 console.log('this.getAllTaskData', this.getAllTaskData);
               }
             })
-
           }
         })
       }

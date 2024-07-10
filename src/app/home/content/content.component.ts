@@ -72,4 +72,15 @@ export class ContentComponent implements OnInit, OnDestroy {
     })
   }
 
+  deleteTask() {
+    const dialogRef = this.dialog.open(DialogBoxComponent, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+      }
+    })
+  }
+
 }

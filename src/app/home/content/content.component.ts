@@ -61,13 +61,14 @@ export class ContentComponent implements OnInit, OnDestroy {
     });
   }
 
-  editTask() {
-    const dialogRef = this.dialog.open(DialogBoxComponent, {
+  editTask(taskList: any) {
+    const dialogRef = this.dialog.open(AddEditTaskComponent, {
       width: '400px',
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
+        console.log("Just to check", taskList);
       }
     })
   }

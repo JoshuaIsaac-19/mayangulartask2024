@@ -1,8 +1,8 @@
 <h3 mat-dialog-title> Add Edit Task</h3>
 <mat-dialog-content class="mat-typography">
-    <form>
+    <form [formGroup]="addEditForm">
         <mat-form-field class="example-full-width">
-            <mat-label for="task-name">Task Name: </mat-label>
+            <mat-label for="task-name">Task Name </mat-label>
             <input matInput id="task-name" formControlName="taskName"><br>
         </mat-form-field>
 
@@ -12,7 +12,7 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-            <mat-label for="status">Status: </mat-label>
+            <mat-label for="status">Status </mat-label>
             <mat-select formControlName="status">
                 <mat-option value="On Time">On Time</mat-option>
                 <mat-option value="In Progress">In Progress</mat-option>
@@ -21,7 +21,7 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-            <mat-label for="status">Priority: </mat-label>
+            <mat-label for="status">Priority </mat-label>
             <mat-select formControlName="priority">
                 <mat-option value="Low">Low</mat-option>
                 <mat-option value="Medium">Medium</mat-option>

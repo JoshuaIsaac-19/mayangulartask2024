@@ -9,22 +9,26 @@ import { TaskStructure } from 'src/app/home/modals/common.home';
 export class TaskService {
 
   private apiUrl = 'http://localhost:5002/task/';
-  private taskAddedSource= new Subject<void>();
-  taskAdded$=this.taskAddedSource.asObservable()
-  
-  constructor( private httpClient: HttpClient ) { }
+  private taskAddedSource = new Subject<void>();
+  taskAdded$ = this.taskAddedSource.asObservable()
 
-  createNewTask(newTaskForm:any) {
-    console.log(this.apiUrl,newTaskForm)
-    return this.httpClient.post((this.apiUrl),newTaskForm) as any;
+  constructor(private httpClient: HttpClient) { }
+
+  createNewTask(newTaskForm: any) {
+    console.log(this.apiUrl, newTaskForm)
+    return this.httpClient.post((this.apiUrl), newTaskForm) as any;
   }
 
-  getAllTasks(){
+  upsertTask(newTaskForm: any) {
+    return this.httpClient.post((this.apiUrl), newTaskForm) as any;
+  }
+
+  getAllTasks() {
     console.log(this.apiUrl);
     return this.httpClient.get(this.apiUrl) as any;
   }
 
-  notifyTaskAdded(){
+  notifyTaskAdded() {
     this.taskAddedSource.next();
   }
 

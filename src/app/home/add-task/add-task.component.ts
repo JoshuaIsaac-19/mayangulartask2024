@@ -39,8 +39,6 @@ export class AddTaskComponent implements OnInit {
     return [year, month, date].join('/');
   }
 
-  // addNewTask() { }
-
   addNewTask() {
     console.log("AddTask Button Clicked");
     const dialogRef = this.openDialog.open(this.addaNewTask, {
@@ -50,6 +48,7 @@ export class AddTaskComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
+        console.log({ INFO: "Accessed addNewTask" });
         // let dueDate= this.formatDate(this.newTaskForm.value.dueDate);
         const newTaskDate = {
           userId: 1,

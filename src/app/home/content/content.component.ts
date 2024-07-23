@@ -90,8 +90,8 @@ export class ContentComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         console.log("taskList", taskList);
+        //Get the data from AddEditTaskComponent
         // const newTaskDate = {
         //   userId: 1,
         //   txt_taskName: this.addEditForm.value.taskName,

@@ -8,7 +8,7 @@ import { TaskStructure } from 'src/app/home/modals/common.home';
 })
 export class TaskService {
 
-  private apiUrl = 'http://localhost:5002/task/';
+  private readonly apiUrl = 'http://localhost:5002/task/';
   private taskAddedSource = new Subject<void>();
   taskAdded$ = this.taskAddedSource.asObservable()
 

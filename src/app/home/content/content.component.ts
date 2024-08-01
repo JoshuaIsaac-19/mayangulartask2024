@@ -22,7 +22,11 @@ export class ContentComponent implements OnInit, OnDestroy {
   // addEditForm!: FormGroup;
   exists: boolean = false;
 
-  constructor(private taskService: TaskService, private dialog: MatDialog, private fb: FormBuilder) { }
+  constructor(
+    private taskService: TaskService, 
+    private dialog: MatDialog, 
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
     // this.addEditForm = new FormGroup({
@@ -90,7 +94,10 @@ export class ContentComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log("taskList", taskList);
+        
+        // this.addEditTaskServe.upsertTaskDetails();
+        // console.log();
+        // console.log("taskList", taskList);
         //Get the data from AddEditTaskComponent
         // const newTaskDate = {
         //   userId: 1,
@@ -129,5 +136,6 @@ export class ContentComponent implements OnInit, OnDestroy {
       }
     })
   }
+  
 
 }

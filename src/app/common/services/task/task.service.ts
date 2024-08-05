@@ -19,6 +19,11 @@ export class TaskService {
     return this.httpClient.post((this.apiUrl), newTaskForm) as any;
   }
 
+  updateTask(editTaskForm:any){
+    console.log(editTaskForm);
+    return this.httpClient.put((this.apiUrl), editTaskForm) as any;
+  }
+
   upsertTask(newTaskForm: any) {
     return this.httpClient.post((this.apiUrl), newTaskForm) as any;
   }

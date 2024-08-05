@@ -18,7 +18,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   addEditForm!: FormGroup;
 
   ngOnInit() {
-    console.log("add-edit-task component ts NgOnit called");
+    // console.log("add-edit-task component ts NgOnit called");
     // console.log("this.data in add-edit-task: ", this.data);
     this.addEditForm = new FormGroup({
       taskName: new FormControl(this.data.txt_taskName || ''),
@@ -30,28 +30,51 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    console.log("this.addEditForm", this.addEditForm.value);
-    console.log("Yep, OnDestroy called on Add-Edit-Task Component");
+    // console.log("this.addEditForm", this.addEditForm.value);
+    // console.log("Yep, OnDestroy called on Add-Edit-Task Component");
+  };
+
+  formatDate(dueDate: Date) {
+    const d = new Date(dueDate);
+    let month = '' + (d.getMonth() + 1);
+    let date = '' + d.getDate();
+    const year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (date.length < 2) date = '0' + date;
+
+    return [year, month, date].join('/');
   }
-  upsertTaskDetails() {
-    // console.log("this.addEditForm", this.addEditForm.value.taskName);
-    // this.taskService.upsertTask(newTaskDate).subscribe((data: AddTaskResponse) => {
-    //   if (data && data.success && data.details.id) {
-    //     console.log(data);
-    //     this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
-    //       console.log('before data', data);
-    //       if (data && data.success && data.details.count && data.details.rows) {
-    //         console.log('success')
-    //         this.taskService.notifyTaskAdded();
-    //         this.getAllTaskData = data.details.rows;
-    //         console.log('this.getAllTaskData', this.getAllTaskData);
-    //       }
-    //     })
-    //   }
-    // })
-  }
-  upsertTaskDetails1(){
-    // console.log(this.addEd)
+  
+  async upsertTaskDetails() {
+    const editNewTask={
+      id: this.data.id,
+      userId: 1,
+      txt_taskName: this.addEditForm.value.taskName,
+      txt_description: this.addEditForm.value.description,
+      txt_status: this.addEditForm.value.status,
+      txt_priority: this.addEditForm.value.priority,
+      date_dueDate: this.formatDate(this.addEditForm.value.dueDate)
+    };
+    console.log("editNewTask", editNewTask);
+    await this.taskService.updateTask(editNewTask).subscribe((data: any)=>{
+      console.log("update data" , data);
+      if(data && data.success){
+        this.taskService.getAllTasks().subscribe((data: any)=>{
+          console.log("getUpdateData", data);
+          if(data && data.success & data.details.count && data.details.rows){
+            console.log("getUpdateData success");
+            this.taskService.notifyTaskAdded();
+          }
+          else{
+            console.log("Failed to get UpdatedData");
+          };
+        })
+      }
+      else{
+        console.log("Failed to update data");
+      };
+    })
   }
 
 }

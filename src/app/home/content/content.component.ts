@@ -90,40 +90,8 @@ export class ContentComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddEditTaskComponent, {
       width: '400px',
       data: taskList
-
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
-        // this.addEditTaskServe.upsertTaskDetails();
-        // console.log();
-        // console.log("taskList", taskList);
-        //Get the data from AddEditTaskComponent
-        // const newTaskDate = {
-        //   userId: 1,
-        //   txt_taskName: this.addEditForm.value.taskName,
-        //   txt_description: this.addEditForm.value.description,
-        //   txt_status: this.addEditForm.value.status,
-        //   txt_priority: this.addEditForm.value.priority,
-        //   date_dueDate: this.formatDate(this.addEditForm.value.dueDate)
-        // }
-        // this.taskService.upsertTask(newTaskDate).subscribe((data: AddTaskResponse) => {
-        //   if (data && data.success && data.details.id) {
-        //     console.log(data);
-        //     this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
-        //       console.log('before data', data);
-        //       if (data && data.success && data.details.count && data.details.rows) {
-        //         console.log('success')
-        //         this.taskService.notifyTaskAdded();
-        //         this.getAllTaskData = data.details.rows;
-        //         console.log('this.getAllTaskData', this.getAllTaskData);
-        //       }
-        //     })
-        //   }
-        // })
-        console.log("Just to check", taskList);
-      }
-    })
+    dialogRef.afterClosed().subscribe();
   }
 
   deleteTask() {
@@ -137,5 +105,6 @@ export class ContentComponent implements OnInit, OnDestroy {
     })
   }
   
+  addNewTask(){}
 
 }

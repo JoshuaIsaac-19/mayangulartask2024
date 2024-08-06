@@ -21,11 +21,11 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
     // console.log("add-edit-task component ts NgOnit called");
     // console.log("this.data in add-edit-task: ", this.data);
     this.addEditForm = new FormGroup({
-      taskName: new FormControl(this.data.txt_taskName || ''),
-      description: new FormControl(this.data.txt_description || ''),
-      status: new FormControl(this.data.txt_status || ''),
-      priority: new FormControl(this.data.txt_priority || ''),
-      dueDate: new FormControl(this.data.date_dueDate || '')
+      taskName: new FormControl(this.data?.txt_taskName || ''),
+      description: new FormControl(this.data?.txt_description || ''),
+      status: new FormControl(this.data?.txt_status || ''),
+      priority: new FormControl(this.data?.txt_priority || ''),
+      dueDate: new FormControl(this.data?.date_dueDate || '')
     });
   }
 

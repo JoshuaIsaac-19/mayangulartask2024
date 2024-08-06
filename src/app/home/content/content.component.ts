@@ -87,24 +87,22 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   editTask(taskList: any) {
-    const dialogRef = this.dialog.open(AddEditTaskComponent, {
+    this.dialog.open(AddEditTaskComponent, {
       width: '400px',
       data: taskList
     });
-    dialogRef.afterClosed().subscribe();
   }
 
   deleteTask() {
-    const dialogRef = this.dialog.open(DialogBoxComponent, {
+    this.dialog.open(DialogBoxComponent, {
       width: '400px',
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result);
-      }
-    })
   }
   
-  addNewTask(){}
+  addNewTask() {
+    this.dialog.open(AddEditTaskComponent,{
+      width: '400px',
+    })
+  }
 
 }

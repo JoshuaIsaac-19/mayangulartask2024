@@ -48,8 +48,8 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   
   async upsertTaskDetails() {
     const editNewTask={
-      id: this.data.id,
-      userId: 1,
+      id: this.data?.id ?? null,
+      userId: 1, //will update once the accounts is implemented
       txt_taskName: this.addEditForm.value.taskName,
       txt_description: this.addEditForm.value.description,
       txt_status: this.addEditForm.value.status,
@@ -57,12 +57,15 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
       date_dueDate: this.formatDate(this.addEditForm.value.dueDate)
     };
     console.log("editNewTask", editNewTask);
-    await this.taskService.updateTask(editNewTask).subscribe((data: any)=>{
-      console.log("update data" , data);
+    await this.taskService.upsertTask(editNewTask).subscribe(async (data: any)=>{
+      console.log("update data", data);
       if(data && data.success){
-        this.taskService.getAllTasks().subscribe((data: any)=>{
+       await this.taskService.getAllTasks().subscribe((data: any)=>{
           console.log("getUpdateData", data);
-          if(data && data.success & data.details.count && data.details.rows){
+          console.log("data.success",data.success ?? false);
+          console.log("data.details.count", data.details.count ?? 0);
+          console.log("data.details.rows", data.details.rows ?? null);
+          if(data.success && data.details.count && data.details.rows){
             console.log("getUpdateData success");
             this.taskService.notifyTaskAdded();
           }

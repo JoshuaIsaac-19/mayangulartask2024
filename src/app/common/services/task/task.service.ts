@@ -25,12 +25,17 @@ export class TaskService {
   }
 
   upsertTask(newTaskForm: any) {
-    return this.httpClient.post((this.apiUrl), newTaskForm) as any;
+    return this.httpClient.post((this.apiUrl+"upsertTaskData"), newTaskForm) as any;
   }
 
   getAllTasks() {
     console.log(this.apiUrl);
-    return this.httpClient.get(this.apiUrl) as any;
+    return this.httpClient.get(this.apiUrl) as any; 
+  }
+
+  deleteTask(taskId:any){
+    console.log("taskId",taskId);
+    return this.httpClient.delete((this.apiUrl), taskId) as any;
   }
 
   notifyTaskAdded() {

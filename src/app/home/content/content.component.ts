@@ -29,13 +29,6 @@ export class ContentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // this.addEditForm = new FormGroup({
-    //   taskName: new FormControl(''),
-    //   description: new FormControl(''),
-    //   status: new FormControl(''),
-    //   priority: new FormControl(''),
-    //   dueDate: new FormControl('')
-    // });
     this.getAllTasksData();
     this.loadTasksData();
   }
@@ -93,9 +86,10 @@ export class ContentComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteTask() {
+  deleteTask(taskId: any) {
     this.dialog.open(DialogBoxComponent, {
       width: '400px',
+      data:taskId
     });
   }
   

@@ -1,4 +1,4 @@
-<h3 mat-dialog-title> Add Edit Task</h3>
+<h3 mat-dialog-title>{{data!=null && data.txt_taskName ? "Edit Task": "Add Task"}}</h3>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="addEditForm">
         <mat-form-field class="example-full-width">

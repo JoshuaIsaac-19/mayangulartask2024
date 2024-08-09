@@ -35,7 +35,7 @@ export class TaskService {
 
   deleteTask(taskId:any){
     console.log("taskId",taskId);
-    return this.httpClient.delete((this.apiUrl), taskId) as any;
+    return this.httpClient.delete(`${this.apiUrl}/${taskId}`) as any;
   }
 
   notifyTaskAdded() {

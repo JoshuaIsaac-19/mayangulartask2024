@@ -17,6 +17,7 @@ import { HighlightPipe } from './common/highlight.pipe';
 import { EditTaskComponent } from './home/edit-task/edit-task.component';
 import { DeleteTaskComponent } from './home/delete-task/delete-task.component';
 import { AddEditTaskComponent } from './home/add-edit-task/add-edit-task.component';
+import { TaskFilterComponent } from './home/task-filter/task-filter.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AddEditTaskComponent } from './home/add-edit-task/add-edit-task.compone
     EditTaskComponent,
     DeleteTaskComponent,
     AddEditTaskComponent,
+    TaskFilterComponent,
   ],
   imports: [
     BrowserModule,

@@ -61,10 +61,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
       console.log("update data", data);
       if(data && data.success){
        await this.taskService.getAllTasks().subscribe((data: any)=>{
-          console.log("getUpdateData", data);
-          console.log("data.success",data.success ?? false);
-          console.log("data.details.count", data.details.count ?? 0);
-          console.log("data.details.rows", data.details.rows ?? null);
           if(data.success && data.details.count && data.details.rows){
             console.log("getUpdateData success");
             this.taskService.notifyTaskAdded();

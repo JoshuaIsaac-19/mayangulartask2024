@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/common/services/task/task.service';
-import { AddTaskResponse, GetAllTasks, RawTaskStructure } from '../modals/common.home';
+import { AddTaskResponse, EventValue, GetAllTasks, ProductList, RawTaskStructure } from '../modals/common.home';
 import { Subscription } from 'rxjs';
 import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,6 +8,7 @@ import { AddTaskComponent } from '../add-task/add-task.component';
 import { DialogBoxComponent } from 'src/app/common/dialog-box/dialog-box.component';
 import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-content',
@@ -18,10 +19,13 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class ContentComponent implements OnInit, OnDestroy {
 
   getAllTaskData!: RawTaskStructure[];
+  tasksData!:RawTaskStructure[];
   private taskAddedSubscription!: Subscription;
   // addEditForm!: FormGroup;
   exists: boolean = false;
 
+  title='Title';
+  filterArray=[{label: 'All', value: 'all'}, {label: 'High', value: 'high'}, {label: 'Medium', value: 'medium'}, {label: 'Low', value: 'low'}]
   constructor(
     private taskService: TaskService, 
     private dialog: MatDialog, 
@@ -29,7 +33,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getAllTasksData();
+    // this.getAllTasksData();
     this.loadTasksData();
   }
   ngOnDestroy(): void {
@@ -54,7 +58,7 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
       console.log('before data', data);
       if (data && data.success && data.details.count && data.details.rows) {
-        console.log('success')
+        console.log('getAllTasksData success')
         this.exists = true;
         this.getAllTaskData = data.details.rows;
         console.log('this.getAllTaskData', this.getAllTaskData);
@@ -68,16 +72,31 @@ export class ContentComponent implements OnInit, OnDestroy {
   loadTasksData() {
     this.taskAddedSubscription = this.taskService.taskAdded$.subscribe(() => {
       this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
-        console.log('before data', data);
         if (data && data.success && data.details.count && data.details.rows) {
-          console.log('success')
+          console.log('loadTasksData success');
           this.exists = true;
           this.getAllTaskData = data.details.rows;
           console.log('this.getAllTaskData', this.getAllTaskData);
         }
+        else{
+          console.log("Failed to load task data");
+        }
       })
     });
   }
+
+  onEmit(event:EventValue){
+    if(event.value=='low' && this.tasksData){
+      const lowStatusTaskFilter= this.tasksData.filter((item:any)=>item.priority=='low' )
+      this.tasksData= lowStatusTaskFilter;
+    }
+    this.taskService.notifyTaskAdded();
+  }
+    // else if(event.value==='>50'){
+    //   const aboveFiftyFilter= this.PRODUCTS_DATA.filter(item=> item.price>50)
+    //   this.productSource= new MatTableDataSource<ProductList>(aboveFiftyFilter)
+    // }
+  // }
 
   editTask(taskList: any) {
     this.dialog.open(AddEditTaskComponent, {

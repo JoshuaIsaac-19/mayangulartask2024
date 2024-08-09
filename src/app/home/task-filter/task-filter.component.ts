@@ -1,18 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-page-list',
-  templateUrl: './page-list.component.html',
-  styleUrls: ['./page-list.component.scss']
+  selector: 'app-task-filter',
+  templateUrl: './task-filter.component.html',
+  styleUrls: ['./task-filter.component.scss']
 })
-export class PageListComponent {
+export class TaskFilterComponent {
   @Input() title!: string;
   @Input() description!: string;
   @Input() actionArray!: any[];
   @Output() actionEmit= new EventEmitter<any>();
 
   selectedChip: object={};
-  constructor(){}
 
   ngOnInit(): void { 
     this.selectedChip= this.actionArray.find(action=>action.value ==='all');

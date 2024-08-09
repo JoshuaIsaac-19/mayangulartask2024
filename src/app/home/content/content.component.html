@@ -1,3 +1,5 @@
+<app-task-filter [title]="title" [actionArray]="filterArray" (actionEmit)="onEmit($event)"></app-task-filter>
+
 <div *ngIf="exists; then cardDataExists; else addNewTaskPageDisplay"></div>
 
 <ng-template #cardDataExists>
@@ -25,8 +27,6 @@
       </mat-card>
     </div>
   </div>
-
-
 </ng-template>
 
 <ng-template #addNewTaskPageDisplay>

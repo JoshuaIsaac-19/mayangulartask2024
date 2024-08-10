@@ -39,6 +39,7 @@ export class TaskService {
   }
 
   notifyTaskAdded() {
+    console.log("this.taskAddedSource", this.taskAddedSource);
     this.taskAddedSource.next();
   }
 

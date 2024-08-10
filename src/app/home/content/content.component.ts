@@ -19,21 +19,20 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ContentComponent implements OnInit, OnDestroy {
 
   getAllTaskData!: RawTaskStructure[];
+  globalTaskData!: RawTaskStructure[];
   tasksData!:RawTaskStructure[];
   private taskAddedSubscription!: Subscription;
-  // addEditForm!: FormGroup;
   exists: boolean = false;
 
   title='Title';
   filterArray=[{label: 'All', value: 'all'}, {label: 'High', value: 'high'}, {label: 'Medium', value: 'medium'}, {label: 'Low', value: 'low'}]
   constructor(
-    private taskService: TaskService, 
-    private dialog: MatDialog, 
+    private taskService: TaskService,
+    private dialog: MatDialog,
     private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
-    // this.getAllTasksData();
     this.loadTasksData();
   }
   ngOnDestroy(): void {
@@ -61,7 +60,7 @@ export class ContentComponent implements OnInit, OnDestroy {
         console.log('getAllTasksData success')
         this.exists = true;
         this.getAllTaskData = data.details.rows;
-        console.log('this.getAllTaskData', this.getAllTaskData);
+
       }
       else {
         this.exists = false;
@@ -75,8 +74,8 @@ export class ContentComponent implements OnInit, OnDestroy {
         if (data && data.success && data.details.count && data.details.rows) {
           console.log('loadTasksData success');
           this.exists = true;
+          this.globalTaskData = data.details.rows;
           this.getAllTaskData = data.details.rows;
-          console.log('this.getAllTaskData', this.getAllTaskData);
         }
         else{
           console.log("Failed to load task data");
@@ -86,17 +85,15 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   onEmit(event:EventValue){
-    if(event.value=='low' && this.tasksData){
-      const lowStatusTaskFilter= this.tasksData.filter((item:any)=>item.priority=='low' )
-      this.tasksData= lowStatusTaskFilter;
-    }
-    this.taskService.notifyTaskAdded();
+      if(event.value=='low' && this.getAllTaskData){
+        const lowStatusTaskFilter= this.globalTaskData.filter((item:any)=>item.txt_priority!='Low');
+        this.getAllTaskData= lowStatusTaskFilter;
+      }
+      else{
+        this.getAllTaskData = this.getAllTaskData;
+      }
+    // this.taskService.notifyTaskAdded();
   }
-    // else if(event.value==='>50'){
-    //   const aboveFiftyFilter= this.PRODUCTS_DATA.filter(item=> item.price>50)
-    //   this.productSource= new MatTableDataSource<ProductList>(aboveFiftyFilter)
-    // }
-  // }
 
   editTask(taskList: any) {
     this.dialog.open(AddEditTaskComponent, {

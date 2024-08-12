@@ -49,7 +49,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   async upsertTaskDetails() {
     const editNewTask={
       id: this.data?.id ?? null,
-      userId: 1, //will update once the accounts is implemented
+      userId: 1, //will update once the accounts are implemented
       txt_taskName: this.addEditForm.value.taskName,
       txt_description: this.addEditForm.value.description,
       txt_status: this.addEditForm.value.status,
@@ -58,17 +58,18 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
     };
     console.log("editNewTask", editNewTask);
     await this.taskService.upsertTask(editNewTask).subscribe(async (data: any)=>{
-      console.log("update data", data);
+      console.log("upsert data", data);
       if(data && data.success){
-       await this.taskService.getAllTasks().subscribe((data: any)=>{
-          if(data.success && data.details.count && data.details.rows){
-            console.log("getUpdateData success");
-            this.taskService.notifyTaskAdded();
-          }
-          else{
-            console.log("Failed to get UpdatedData");
-          };
-        })
+        this.taskService.loadTasksData();
+      //  await this.taskService.getAllTasks().subscribe((data: any)=>{
+      //     if(data.success && data.details.count && data.details.rows){
+      //       console.log("upsert getUpdateData success");
+      //       this.taskService.notifyTaskAdded();
+      //     }
+      //     else{
+      //       console.log("Failed to get UpdatedData");
+      //     };
+      //   })
       }
       else{
         console.log("Failed to update data");

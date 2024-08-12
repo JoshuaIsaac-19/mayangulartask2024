@@ -1,14 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TaskService } from 'src/app/common/services/task/task.service';
-import { AddTaskResponse, EventValue, GetAllTasks, ProductList, RawTaskStructure } from '../modals/common.home';
+import { EventValue, GetAllTasks, RawTaskStructure } from '../modals/common.home';
 import { Subscription } from 'rxjs';
-import { EditTaskComponent } from '../edit-task/edit-task.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AddTaskComponent } from '../add-task/add-task.component';
 import { DialogBoxComponent } from 'src/app/common/dialog-box/dialog-box.component';
 import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-content',
@@ -25,15 +21,26 @@ export class ContentComponent implements OnInit, OnDestroy {
   exists: boolean = false;
 
   title='Title';
-  filterArray=[{label: 'All', value: 'all'}, {label: 'High', value: 'high'}, {label: 'Medium', value: 'medium'}, {label: 'Low', value: 'low'}]
+  filterArray=[
+    {label: 'All', value: 'all'},
+    {label: 'High', value: 'high'}, 
+    {label: 'Medium', value: 'medium'}, 
+    {label: 'Low', value: 'low'}
+  ]
   constructor(
     private taskService: TaskService,
     private dialog: MatDialog,
-    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
-    this.loadTasksData();
+    console.log("this.loadTasksData()", this.loadTasksData());
+    // console.log("this.taskService.loadTasksData()", this.taskService.loadTasksData());
+    // this.getAllTaskData= this.taskService.loadTasksData();
+    // this.taskAddedSubscription = this.taskService.taskAdded$.subscribe((updatedTasks: RawTaskStructure[]) => {
+    //   this.globalTaskData = updatedTasks;
+    //   this.getAllTaskData = updatedTasks;
+    // });
+
   }
   ngOnDestroy(): void {
     if (this.taskAddedSubscription) {
@@ -57,10 +64,10 @@ export class ContentComponent implements OnInit, OnDestroy {
     this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
       console.log('before data', data);
       if (data && data.success && data.details.count && data.details.rows) {
-        console.log('getAllTasksData success')
+        console.log('getAllTasksData success');
         this.exists = true;
-        this.getAllTaskData = data.details.rows;
-
+        this.getAllTaskData = data.details.rows;  
+        this.globalTaskData = data.details.rows;
       }
       else {
         this.exists = false;
@@ -68,9 +75,9 @@ export class ContentComponent implements OnInit, OnDestroy {
     })
   }
 
-  loadTasksData() {
-    this.taskAddedSubscription = this.taskService.taskAdded$.subscribe(() => {
-      this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
+  async loadTasksData() {
+    // this.taskAddedSubscription = this.taskService.taskAdded$.subscribe(() => {
+      await this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
         if (data && data.success && data.details.count && data.details.rows) {
           console.log('loadTasksData success');
           this.exists = true;
@@ -81,18 +88,38 @@ export class ContentComponent implements OnInit, OnDestroy {
           console.log("Failed to load task data");
         }
       })
-    });
+    // });
   }
 
-  onEmit(event:EventValue){
-      if(event.value=='low' && this.getAllTaskData){
-        const lowStatusTaskFilter= this.globalTaskData.filter((item:any)=>item.txt_priority!='Low');
-        this.getAllTaskData= lowStatusTaskFilter;
+  async onEmit(event:EventValue){
+    // this.taskAddedSubscription= this.taskService.taskAdded$.subscribe(()=>{
+      if((event.value=='low' || event.value=='Low') && this.exists){
+        // this.loadTasksData();
+        
+        this.getAllTaskData=this.globalTaskData.filter((item:any)=>item.txt_priority=='Low');
+        this.taskService.notifyTaskAdded();
+        // this.taskAddedSubscription.unsubscribe();
+      }
+      else if((event.value=='high' || event.value=='High') && this.exists){
+        // this.loadTasksData();
+        this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='High');
+        this.taskService.notifyTaskAdded();
+        // this.taskAddedSubscription.unsubscribe();
+      }
+      else if((event.value=='medium' || event.value=='Medium') && this.exists){
+        // this.loadTasksData();
+        this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='Medium');
+        this.taskService.notifyTaskAdded();
+        // this.taskAddedSubscription.unsubscribe();
       }
       else{
-        this.getAllTaskData = this.getAllTaskData;
+        this.loadTasksData();
+        this.getAllTaskData = this.globalTaskData;
       }
-    // this.taskService.notifyTaskAdded();
+    // })
+    
+    this.taskService.notifyTaskAdded();
+    // this.taskAddedSubscription.unsubscribe();
   }
 
   editTask(taskList: any) {
@@ -108,11 +135,10 @@ export class ContentComponent implements OnInit, OnDestroy {
       data:taskId
     });
   }
-  
+
   addNewTask() {
-    this.dialog.open(AddEditTaskComponent,{
+    this.dialog.open(AddEditTaskComponent, {
       width: '400px',
     })
   }
-
 }

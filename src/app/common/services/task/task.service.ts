@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { TaskStructure } from 'src/app/home/modals/common.home';
+import { GetAllTasks, RawTaskStructure, TaskStructure } from 'src/app/home/modals/common.home';
 
 @Injectable({
   providedIn: 'root'
@@ -43,4 +43,16 @@ export class TaskService {
     this.taskAddedSource.next();
   }
 
+  loadTasksData():RawTaskStructure {
+    return this.getAllTasks().subscribe((data: GetAllTasks) => {
+      if (data && data.success && data.details.count && data.details.rows) {
+        console.log('loadTasksData success');
+        return data.details.rows;
+      }
+      // else {
+      console.log("Failed to load task data");
+      return null;
+    });
+    
+  }
 }

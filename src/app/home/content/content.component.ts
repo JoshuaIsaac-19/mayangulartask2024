@@ -33,7 +33,11 @@ export class ContentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log("this.loadTasksData()", this.loadTasksData());
+    
+
+    this.taskService.notifyTaskAdded();
+    this.getAllTasksData();
+    // console.log("this.loadTasksData()", this.loadTasksData());
     // console.log("this.taskService.loadTasksData()", this.taskService.loadTasksData());
     // this.getAllTaskData= this.taskService.loadTasksData();
     // this.taskAddedSubscription = this.taskService.taskAdded$.subscribe((updatedTasks: RawTaskStructure[]) => {
@@ -66,7 +70,7 @@ export class ContentComponent implements OnInit, OnDestroy {
       if (data && data.success && data.details.count && data.details.rows) {
         console.log('getAllTasksData success');
         this.exists = true;
-        this.getAllTaskData = data.details.rows;  
+        this.getAllTaskData = data.details.rows;
         this.globalTaskData = data.details.rows;
       }
       else {

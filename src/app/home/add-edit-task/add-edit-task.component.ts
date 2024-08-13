@@ -60,16 +60,16 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
     await this.taskService.upsertTask(editNewTask).subscribe(async (data: any)=>{
       console.log("upsert data", data);
       if(data && data.success){
-        this.taskService.loadTasksData();
-      //  await this.taskService.getAllTasks().subscribe((data: any)=>{
-      //     if(data.success && data.details.count && data.details.rows){
-      //       console.log("upsert getUpdateData success");
-      //       this.taskService.notifyTaskAdded();
-      //     }
-      //     else{
-      //       console.log("Failed to get UpdatedData");
-      //     };
-      //   })
+        // this.taskService.loadTasksData();
+       await this.taskService.getAllTasks().subscribe((data: any)=>{
+          if(data.success && data.details.count && data.details.rows){
+            console.log("upsert getUpdateData success");
+            this.taskService.notifyTaskAdded();
+          }
+          else{
+            console.log("Failed to get UpdatedData");
+          };
+        })
       }
       else{
         console.log("Failed to update data");

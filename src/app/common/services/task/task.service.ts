@@ -10,7 +10,7 @@ export class TaskService {
 
   private readonly apiUrl = 'http://localhost:5002/task/';
   private taskAddedSource = new Subject<void>();
-  // taskAdded$ = this.taskAddedSource.asObservable()
+  taskAdded$ = this.taskAddedSource.asObservable()
 
   constructor(private httpClient: HttpClient) { }
 

@@ -19,10 +19,6 @@ export class DialogBoxComponent {
       console.log("res",res);
       if(res && res.success){
         await this.taskService.getAllTasks().subscribe((res:any)=>{
-          // console.log("res",res);
-          // console.log("res.success",res.success);
-          // console.log("res.details.count",res.details.count);
-          // console.log("res.details.rows",res.details.rows);
           if(res.success && res.details.count && res.details.rows){
             this.taskService.notifyTaskAdded();
           }

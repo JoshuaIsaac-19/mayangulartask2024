@@ -66,9 +66,9 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   getAllTasksData() {
     this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
-      console.log('before data', data);
+      // console.log('before data', data);
       if (data && data.success && data.details.count && data.details.rows) {
-        console.log('getAllTasksData success');
+        // console.log('getAllTasksData success');
         this.exists = true;
         this.getAllTaskData = data.details.rows;
         this.globalTaskData = data.details.rows;
@@ -80,7 +80,8 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   async loadTasksData() {
-    // this.taskAddedSubscription = this.taskService.taskAdded$.subscribe(() => {
+    this.taskAddedSubscription = this.taskService.taskAdded$.subscribe(async() => {
+      // this.getAllTasksData();
       await this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
         if (data && data.success && data.details.count && data.details.rows) {
           console.log('loadTasksData success');
@@ -92,27 +93,29 @@ export class ContentComponent implements OnInit, OnDestroy {
           console.log("Failed to load task data");
         }
       })
-    // });
+    });
   }
 
   async onEmit(event:EventValue){
     // this.taskAddedSubscription= this.taskService.taskAdded$.subscribe(()=>{
       if((event.value=='low' || event.value=='Low') && this.exists){
-        // this.loadTasksData();
-        
+        this.loadTasksData();
         this.getAllTaskData=this.globalTaskData.filter((item:any)=>item.txt_priority=='Low');
+        console.log("onEmit Low ", this.getAllTaskData);
         this.taskService.notifyTaskAdded();
         // this.taskAddedSubscription.unsubscribe();
       }
       else if((event.value=='high' || event.value=='High') && this.exists){
-        // this.loadTasksData();
+        this.loadTasksData();
         this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='High');
+        console.log("onEmit High ", this.getAllTaskData);   
         this.taskService.notifyTaskAdded();
         // this.taskAddedSubscription.unsubscribe();
       }
       else if((event.value=='medium' || event.value=='Medium') && this.exists){
-        // this.loadTasksData();
+        // this.loadTasksData();/
         this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='Medium');
+        console.log("onEmit medium ", this.getAllTaskData);
         this.taskService.notifyTaskAdded();
         // this.taskAddedSubscription.unsubscribe();
       }
@@ -122,7 +125,7 @@ export class ContentComponent implements OnInit, OnDestroy {
       }
     // })
     
-    this.taskService.notifyTaskAdded();
+    // this.taskService.notifyTaskAdded();
     // this.taskAddedSubscription.unsubscribe();
   }
 

@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
     ngOnInit() {
       this.currentUrl = (this._router.url).split('/');
       this.urlArrayLength= this.currentUrl.length;
-      console.log('Current URL:', this.currentUrl[this.urlArrayLength-1]);
+      // console.log('Current URL:', this.currentUrl[this.urlArrayLength-1]);
     
       if(this.currentUrl[this.urlArrayLength-1]=="home"){
         this.isHomeActive=true;

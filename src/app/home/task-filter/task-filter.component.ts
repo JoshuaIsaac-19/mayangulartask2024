@@ -15,13 +15,12 @@ export class TaskFilterComponent {
 
   ngOnInit(): void { 
     this.selectedChip= this.actionArray.find(action=>action.value ==='all');
-    console.log(this.selectedChip);
+    console.log("this.selectedChip ", this.selectedChip);
     if(this.selectedChip) {
       this.onActionEmit(this.selectedChip);
     }
   }
   onActionEmit(event: any){
-    // console.log('event' ,event)
     if(this.selectedChip!==event){
       console.log('onActionEmit', event);
       this.selectedChip=event;

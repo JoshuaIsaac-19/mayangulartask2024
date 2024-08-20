@@ -1,9 +1,8 @@
 <p>{{title}}</p>
 <ng-container *ngIf="actionArray && actionArray.length">
-    <mat-chip-listbox aria-label="Filter selection">
-        <mat-chip-option 
-        *ngFor="let item of actionArray" 
+    <mat-chip-listbox>
+        <mat-chip-option *ngFor="let item of actionArray" 
         (click)="onActionEmit(item)"
-        [selected]="selectedChip === item">{{item.label}}</mat-chip-option>
+        [selected]="selectedChip === item" [disabled]="selectedChip === item">{{item.label}}</mat-chip-option>
       </mat-chip-listbox>
 </ng-container>

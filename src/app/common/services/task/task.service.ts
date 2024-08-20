@@ -43,15 +43,8 @@ export class TaskService {
     this.taskAddedSource.next();
   }
 
-  // loadTasksData():RawTaskStructure {
-  //   return this.getAllTasks().subscribe((data: GetAllTasks) => {
-  //     if (data && data.success && data.details.count && data.details.rows) {
-  //       console.log('loadTasksData success');
-  //       return data.details.rows;
-  //     }
-  //     // else {
-  //     console.log("Failed to load task data");
-  //     return null;
-  //   });
-  // }
+  getSimpleTable(){
+    return this.httpClient.get(this.apiUrl+"/testing") as any;
+  }
+  
 }

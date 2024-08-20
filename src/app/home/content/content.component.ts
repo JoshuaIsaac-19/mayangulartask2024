@@ -33,20 +33,10 @@ export class ContentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    
-
     this.taskService.notifyTaskAdded();
     this.loadTasksData();
-    // this.getAllTasksData();
-    // console.log("this.loadTasksData()", this.loadTasksData());
-    // console.log("this.taskService.loadTasksData()", this.taskService.loadTasksData());
-    // this.getAllTaskData= this.taskService.loadTasksData();
-    // this.taskAddedSubscription = this.taskService.taskAdded$.subscribe((updatedTasks: RawTaskStructure[]) => {
-    //   this.globalTaskData = updatedTasks;
-    //   this.getAllTaskData = updatedTasks;
-    // });
-
   }
+
   ngOnDestroy(): void {
     if (this.taskAddedSubscription) {
       this.taskAddedSubscription.unsubscribe();
@@ -66,8 +56,6 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   async loadTasksData() {
-    // this.taskAddedSubscription = this.taskService.taskAdded$.subscribe(async() => {
-      // this.getAllTasksData();
       await this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
         if (data && data.success && data.details.count && data.details.rows) {
           console.log('loadTasksData success');
@@ -79,57 +67,53 @@ export class ContentComponent implements OnInit, OnDestroy {
           console.log("Failed to load task data");
         }
       })
-    // });
   }
 
   async onEmit(event:EventValue){
-    // this.taskAddedSubscription= this.taskService.taskAdded$.subscribe(()=>{
       if((event.value=='low' || event.value=='Low') && this.exists){
-        // this.loadTasksData();
         this.getAllTaskData=this.globalTaskData.filter((item:any)=>item.txt_priority=='Low');
-        console.log("onEmit Low ", this.getAllTaskData);
-        // this.taskService.notifyTaskAdded();
-        
+        console.log("onEmit Low ", this.getAllTaskData);      
       }
       else if((event.value=='high' || event.value=='High') && this.exists){
-        // this.loadTasksData();
         this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='High');
-        console.log("onEmit High ", this.getAllTaskData);   
-        // this.taskService.notifyTaskAdded();
+        console.log("onEmit High ", this.getAllTaskData);
       }
       else if((event.value=='medium' || event.value=='Medium') && this.exists){
-        // this.loadTasksData();
         this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='Medium');
         console.log("onEmit medium ", this.getAllTaskData);
-        // this.taskService.notifyTaskAdded();
       }
       else{
-        // this.loadTasksData();
+        this.loadTasksData();
         this.getAllTaskData = this.globalTaskData;
       }
-    // })
-    
-    // this.taskService.notifyTaskAdded();
-    // this.taskAddedSubscription.unsubscribe();
   }
 
-  editTask(taskList: any) {
-    this.dialog.open(AddEditTaskComponent, {
-      width: '400px',
-      data: taskList
-    });
-  }
+  // addEditTask(taskList: any) {
+  //   this.dialog.open(AddEditTaskComponent, {
+  //     width: '400px',
+  //     data: taskList
+  //   });
+  // }
 
   deleteTask(taskId: any) {
     this.dialog.open(DialogBoxComponent, {
       width: '400px',
       data:taskId
+    }).afterClosed().subscribe((res)=>{
+      if(res){
+        this.loadTasksData();
+      }
     });
   }
 
-  addNewTask() {
+  addEditTask(taskList:any) {
     this.dialog.open(AddEditTaskComponent, {
       width: '400px',
+      data: taskList
+    }).afterClosed().subscribe((res)=>{
+      if(res){
+        this.loadTasksData();
+      }
     })
   }
 }

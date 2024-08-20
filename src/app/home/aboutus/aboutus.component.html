@@ -1,1 +1,17 @@
-<p>aboutus works!</p>
+<div *ngIf=" testGlobalData?.count then displayer; else nodata"></div>
+
+<ng-template #displayer>
+    <div *ngFor="let data of testGlobalData">
+        <p> {{data.id}}</p>
+        <p>{{data.txt_randomname}}</p>
+    </div>
+</ng-template>
+
+<ng-template #nodata>
+    <div>
+        <p>No Data present</p>
+    </div>
+</ng-template>
+
+
+<button mat-fab matTooltip="Add New Data!" (click)="addSimpleData()" color="dark" class="add-new-task-button"><mat-icon>add</mat-icon></button>

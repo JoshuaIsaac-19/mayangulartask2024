@@ -41,7 +41,7 @@ import { MatTableModule } from '@angular/material/table';
 
 import { DialogBoxComponent } from '../common/dialog-box/dialog-box.component';
 import { FormsModule } from '@angular/forms';
-import { EditTaskComponent } from '../home/edit-task/edit-task.component';
+
 
 @NgModule({
   declarations: [
@@ -122,7 +122,6 @@ import { EditTaskComponent } from '../home/edit-task/edit-task.component';
   ],
   entryComponents:[
     DialogBoxComponent,
-    EditTaskComponent
   ]
 })
 export class MaterialModule { }

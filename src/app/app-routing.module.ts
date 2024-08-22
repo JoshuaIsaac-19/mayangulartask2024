@@ -4,11 +4,17 @@ import { NavbarComponent } from './common/navbar/navbar.component';
 import { ContentComponent } from './home/content/content.component';
 import { SettingsComponent } from './home/settings/settings.component';
 import { AboutusComponent } from './home/aboutus/aboutus.component';
-import { TableComponent } from './home/table/table.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
+    path: 'login', component: LoginComponent
+  },
+  {
     path: 'app', component: NavbarComponent, children: [
+      {
+        path: 'login', component: LoginComponent
+      },
       {
         path: 'home', children: [
           { path: '', component:ContentComponent},
@@ -18,7 +24,7 @@ const routes: Routes = [
       { path: 'aboutus', component: AboutusComponent }
     ]
   },
-  {path:'**', redirectTo:'app/home', pathMatch:'full'}
+  {path:'**', redirectTo:'login', pathMatch:'full'}
 ];
 
 @NgModule({

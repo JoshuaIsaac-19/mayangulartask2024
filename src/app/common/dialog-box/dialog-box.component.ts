@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskService } from '../services/task/task.service';
+import { AuthService } from 'src/app/auth/auth-service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-box',
@@ -9,11 +11,23 @@ import { TaskService } from '../services/task/task.service';
 })
 export class DialogBoxComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private taskService: TaskService) { }
+  constructor(
+    
+    @Inject(MAT_DIALOG_DATA) public data: any, 
+    private taskService: TaskService, 
+    private authService: AuthService, 
+    private _router: Router
+
+  ) { }
 
   ngOnInit() {
-    console.log('mat_dialog_data', this.data);
+    this.authService.authenticator().subscribe((authRes:any)=>{
+      if(!authRes.status || !authRes.success){
+        (this._router).navigate(['login']);
+      }
+    });
   }
+  
   async softDeleteTask(){
     await this.taskService.deleteTask(this.data).subscribe(async (res:any)=>{
       console.log("res",res);

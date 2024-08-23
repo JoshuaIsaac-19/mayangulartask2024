@@ -37,9 +37,6 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authService.authenticator().subscribe((authRes:any)=>{
-      console.log("authRes",authRes);
-      console.log("authRes.status", authRes.status);
-      console.log("authRes.success", authRes.success);
       if(!authRes.status || !authRes.success){
         (this._router).navigate(['login']);
       }

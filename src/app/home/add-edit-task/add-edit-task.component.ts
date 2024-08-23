@@ -12,7 +12,13 @@ import { TaskService } from 'src/app/common/services/task/task.service';
 })
 export class AddEditTaskComponent implements OnInit, OnDestroy {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private taskService: TaskService, private authService: AuthService, private _router: Router) { }
+  constructor(
+    
+    @Inject(MAT_DIALOG_DATA) public data: any, 
+    private taskService: TaskService, 
+    private authService: AuthService, 
+    private _router: Router
+  ) { }
 
   @ViewChild('editTask', { static: true }) editTask!: TemplateRef<any>;
 
@@ -20,9 +26,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authService.authenticator().subscribe((authRes:any)=>{
-      console.log("authRes",authRes);
-      console.log("authRes.status", authRes.status);
-      console.log("authRes.success", authRes.success);
       if(!authRes.status || !authRes.success){
         (this._router).navigate(['login']);
       }

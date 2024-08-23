@@ -1,7 +1,8 @@
+<app-task-filter [title]="title" [actionArray]="filterArray" (actionEmit)="onEmit($event)"></app-task-filter>
 <div *ngIf="getAllTaskData &&(getAllTaskData!=null) && getAllTaskData?.length ; then cardDataExists; else addNewTaskPageDisplay"></div>
 
 <ng-template #cardDataExists>
-  <app-task-filter [title]="title" [actionArray]="filterArray" (actionEmit)="onEmit($event)"></app-task-filter>
+  
   <div class="table-display">
     <div *ngFor="let tasklist of getAllTaskData" class="each-card">
       <mat-card>

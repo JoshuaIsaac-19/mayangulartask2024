@@ -15,10 +15,15 @@ export class SettingsComponent {
     {id :  4, summary : "What more could you ask for?" }
   ]
 
-  isSpecial:boolean =true;
+  isSpecial:boolean = true;
 
   searchTerm!:string;
-  constructor(private authService: AuthService, private _router: Router) {}
+  constructor(
+
+    private authService: AuthService,
+    private _router: Router
+
+    ) {}
 
   ngOnOnit(){
     this.authService.authenticator().subscribe((authRes:any)=>{

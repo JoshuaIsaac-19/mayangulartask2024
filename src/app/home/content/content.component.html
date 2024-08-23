@@ -1,4 +1,4 @@
-<div *ngIf="exists && getAllTaskData &&(getAllTaskData!=null) && getAllTaskData?.length ; then cardDataExists; else addNewTaskPageDisplay"></div>
+<div *ngIf="getAllTaskData &&(getAllTaskData!=null) && getAllTaskData?.length ; then cardDataExists; else addNewTaskPageDisplay"></div>
 
 <ng-template #cardDataExists>
   <app-task-filter [title]="title" [actionArray]="filterArray" (actionEmit)="onEmit($event)"></app-task-filter>

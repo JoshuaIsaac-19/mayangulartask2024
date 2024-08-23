@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBoxComponent } from 'src/app/common/dialog-box/dialog-box.component';
 import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
+import { AuthService } from 'src/app/auth/auth-service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-content',
@@ -18,7 +20,6 @@ export class ContentComponent implements OnInit, OnDestroy {
   globalTaskData!: RawTaskStructure[];
   tasksData!:RawTaskStructure[];
   private taskAddedSubscription!: Subscription;
-  exists: boolean = false;
 
   title='Title';
   filterArray=[
@@ -28,11 +29,21 @@ export class ContentComponent implements OnInit, OnDestroy {
     {label: 'Low', value: 'low'}
   ]
   constructor(
+    private authService: AuthService,
     private taskService: TaskService,
     private dialog: MatDialog,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
+    this.authService.authenticator().subscribe((authRes:any)=>{
+      console.log("authRes",authRes);
+      console.log("authRes.status", authRes.status);
+      console.log("authRes.success", authRes.success);
+      if(!authRes.status || !authRes.success){
+        (this._router).navigate(['login']);
+      }
+    });
     this.taskService.notifyTaskAdded();
     this.loadTasksData();
   }
@@ -59,7 +70,6 @@ export class ContentComponent implements OnInit, OnDestroy {
       await this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
         if (data && data.success && data.details.count && data.details.rows) {
           console.log('loadTasksData success');
-          this.exists = true;
           this.globalTaskData = data.details.rows;
           this.getAllTaskData = data.details.rows;
         }
@@ -70,15 +80,15 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   async onEmit(event:EventValue){
-      if((event.value=='low' || event.value=='Low') && this.exists){
+      if((event.value=='low' || event.value=='Low') && this.getAllTaskData){
         this.getAllTaskData=this.globalTaskData.filter((item:any)=>item.txt_priority=='Low');
         console.log("onEmit Low ", this.getAllTaskData);      
       }
-      else if((event.value=='high' || event.value=='High') && this.exists){
+      else if((event.value=='high' || event.value=='High') && this.getAllTaskData){
         this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='High');
         console.log("onEmit High ", this.getAllTaskData);
       }
-      else if((event.value=='medium' || event.value=='Medium') && this.exists){
+      else if((event.value=='medium' || event.value=='Medium') && this.getAllTaskData){
         this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='Medium');
         console.log("onEmit medium ", this.getAllTaskData);
       }
@@ -87,13 +97,6 @@ export class ContentComponent implements OnInit, OnDestroy {
         this.getAllTaskData = this.globalTaskData;
       }
   }
-
-  // addEditTask(taskList: any) {
-  //   this.dialog.open(AddEditTaskComponent, {
-  //     width: '400px',
-  //     data: taskList
-  //   });
-  // }
 
   deleteTask(taskId: any) {
     this.dialog.open(DialogBoxComponent, {

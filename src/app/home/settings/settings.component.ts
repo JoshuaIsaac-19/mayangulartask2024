@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth-service/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -16,10 +18,14 @@ export class SettingsComponent {
   isSpecial:boolean =true;
 
   searchTerm!:string;
-  constructor() {}
+  constructor(private authService: AuthService, private _router: Router) {}
 
   ngOnOnit(){
-
+    this.authService.authenticator().subscribe((authRes:any)=>{
+      if(!authRes.status || !authRes.success){
+        (this._router).navigate(['login']);
+      }
+    });
   }
   updateSearch(e:any){
     this.searchTerm=e.target.value

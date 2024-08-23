@@ -4,17 +4,18 @@ import { NavbarComponent } from './common/navbar/navbar.component';
 import { ContentComponent } from './home/content/content.component';
 import { SettingsComponent } from './home/settings/settings.component';
 import { AboutusComponent } from './home/aboutus/aboutus.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 const routes: Routes = [
   {
     path: 'login', component: LoginComponent
   },
   {
+    path:'signup', component:SignupComponent
+  },
+  {
     path: 'app', component: NavbarComponent, children: [
-      {
-        path: 'login', component: LoginComponent
-      },
       {
         path: 'home', children: [
           { path: '', component:ContentComponent},

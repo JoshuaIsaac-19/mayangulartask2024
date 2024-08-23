@@ -10,12 +10,12 @@ import { SettingsComponent } from './home/settings/settings.component';
 import { AboutusComponent } from './home/aboutus/aboutus.component';
 import { TableComponent } from './home/table/table.component';
 import { PageListComponent } from './home/page-list/page-list.component';
-import { FormComponent } from './home/form/form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HighlightPipe } from './common/highlight.pipe';
 import { AddEditTaskComponent } from './home/add-edit-task/add-edit-task.component';
 import { TaskFilterComponent } from './home/task-filter/task-filter.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -26,11 +26,11 @@ import { LoginComponent } from './login/login.component';
     AboutusComponent,
     TableComponent,
     PageListComponent,
-    FormComponent,
     HighlightPipe,
     AddEditTaskComponent,
     TaskFilterComponent,
     LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

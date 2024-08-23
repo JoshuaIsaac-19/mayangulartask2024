@@ -1,0 +1,32 @@
+<div class="signup-body">
+    <body>
+      <section class="signup-container">
+        <header>Registration Form</header>
+        <form class="form" [formGroup]="signupForm">
+          <div class="input-box">
+            <p class="important"><label>First Name </label>*</p>
+            <input type="text" formControlName="firstName" placeholder="Enter first name" required />
+          </div>
+    
+          <div class="input-box">
+            <p class="important"><label>Last Name </label>*</p>
+            <input type="text" formControlName="lastName" placeholder="Enter last name" required />
+          </div>
+    
+          <div class="input-box">
+            <p class="important"><label>Email Address </label>*</p>
+            <input type="text" formControlName="emailAddress" placeholder="Enter email address" required />
+          </div>
+    
+          <div class="input-box">
+            <p class="important"><label>Password</label>*</p>
+            <input type="password" formControlName="password" placeholder="Enter a Strong Password" required />
+          </div>
+          <br>
+          <p>Already a user? <a routerLink="/login">Login here!</a></p>
+          <button type="submit" (click)="onSubmit()">Submit</button>
+        </form>
+      </section>
+    </body>
+    
+  </div>

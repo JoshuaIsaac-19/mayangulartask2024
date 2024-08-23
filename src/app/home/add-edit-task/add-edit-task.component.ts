@@ -1,8 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth-service/auth.service';
 import { TaskService } from 'src/app/common/services/task/task.service';
-import { AddTaskResponse, GetAllTasks } from '../modals/common.home';
 
 @Component({
   selector: 'app-add-edit-task',
@@ -11,15 +12,21 @@ import { AddTaskResponse, GetAllTasks } from '../modals/common.home';
 })
 export class AddEditTaskComponent implements OnInit, OnDestroy {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private taskService: TaskService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private taskService: TaskService, private authService: AuthService, private _router: Router) { }
 
   @ViewChild('editTask', { static: true }) editTask!: TemplateRef<any>;
 
   addEditForm!: FormGroup;
 
   ngOnInit() {
-    // console.log("add-edit-task component ts NgOnit called");
-    // console.log("this.data in add-edit-task: ", this.data);
+    this.authService.authenticator().subscribe((authRes:any)=>{
+      console.log("authRes",authRes);
+      console.log("authRes.status", authRes.status);
+      console.log("authRes.success", authRes.success);
+      if(!authRes.status || !authRes.success){
+        (this._router).navigate(['login']);
+      }
+    });
     this.addEditForm = new FormGroup({
       taskName: new FormControl(this.data?.txt_taskName || ''),
       description: new FormControl(this.data?.txt_description || ''),
@@ -30,8 +37,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    // console.log("this.addEditForm", this.addEditForm.value);
-    // console.log("Yep, OnDestroy called on Add-Edit-Task Component");
+
   };
 
   formatDate(dueDate: Date) {
@@ -60,7 +66,6 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
     await this.taskService.upsertTask(editNewTask).subscribe(async (data: any)=>{
       console.log("upsert data", data);
       if(data && data.success){
-        // this.taskService.loadTasksData();
        await this.taskService.getAllTasks().subscribe((data: any)=>{
           if(data.success && data.details.count && data.details.rows){
             console.log("upsert getUpdateData success");

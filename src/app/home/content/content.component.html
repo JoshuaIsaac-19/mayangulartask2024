@@ -21,8 +21,8 @@
           <p></p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button (click)="addEditTask(tasklist)">EDIT</button>
-          <button mat-button (click)="deleteTask(tasklist.id)">DELETE</button>
+          <button mat-button (click)="addEditDelTask(tasklist)">EDIT</button>
+          <button mat-button (click)="addEditDelTask(tasklist.id)">DELETE</button>
         </mat-card-actions>
       </mat-card>
     </div>
@@ -33,4 +33,4 @@
   <p>Cards not present</p>
 </ng-template>
 
-<button mat-fab matTooltip="Add New Task!" (click)="addEditTask(null)" color="dark" class="add-new-task-button"><mat-icon>add</mat-icon></button>
+<button mat-fab matTooltip="Add New Task!" (click)="addEditDelTask(null)" color="dark" class="add-new-task-button"><mat-icon>add</mat-icon></button>

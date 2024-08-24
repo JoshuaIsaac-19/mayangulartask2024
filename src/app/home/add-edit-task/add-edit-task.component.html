@@ -1,5 +1,16 @@
-<h3 mat-dialog-title>{{data!=null && data.txt_taskName ? "Edit Task": "Add Task"}}</h3>
-<mat-dialog-content class="mat-typography">
+<div 
+    *ngIf=" data && 
+    !data?.txt_taskName && 
+    !data?.txt_description && 
+    !data?.txt_priority && 
+    !data?.txt_status
+    then deletetask; 
+    else addedittask">
+</div>
+
+<ng-template #addedittask> 
+    <h3 mat-dialog-title>{{data!=null && data.txt_taskName ? "Edit Task": "Add Task"}}</h3>
+    <mat-dialog-content class="mat-typography">
     <form [formGroup]="addEditForm">
         <mat-form-field class="example-full-width">
             <mat-label for="task-name">Task Name </mat-label>
@@ -45,15 +56,16 @@
     <button mat-stroked-button [mat-dialog-close]="false">Cancel</button>
     <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="upsertTaskDetails()">Save</button>
 </mat-dialog-actions>
+</ng-template>
 
 
-
-
-<!-- <h2 mat-dialog-title>Confirmation</h2>
-<mat-dialog-content class="mat-typography">
-    <p>Are you sure you want to delete?</p>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-stroked-button [mat-dialog-close]="false">No</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="true">Yes</button>
-</mat-dialog-actions> -->
+<ng-template #deletetask>
+    <h2 mat-dialog-title>Confirmation</h2>
+        <mat-dialog-content class="mat-typography">
+            <p>Are you sure you want to delete?</p>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+            <button mat-stroked-button [mat-dialog-close]="false">No</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="softDeleteTask()">Yes</button>
+        </mat-dialog-actions>
+</ng-template>

@@ -21,11 +21,7 @@ export class DialogBoxComponent {
   ) { }
 
   ngOnInit() {
-    this.authService.authenticator().subscribe((authRes:any)=>{
-      if(!authRes.status || !authRes.success){
-        (this._router).navigate(['login']);
-      }
-    });
+    this.authService.authenticator();
   }
   
   async softDeleteTask(){

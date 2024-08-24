@@ -19,18 +19,12 @@ export class SettingsComponent {
 
   searchTerm!:string;
   constructor(
-
     private authService: AuthService,
     private _router: Router
-
     ) {}
 
   ngOnOnit(){
-    this.authService.authenticator().subscribe((authRes:any)=>{
-      if(!authRes.status || !authRes.success){
-        (this._router).navigate(['login']);
-      }
-    });
+    this.authService.authenticator();
   }
   updateSearch(e:any){
     this.searchTerm=e.target.value

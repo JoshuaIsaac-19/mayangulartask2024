@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +10,10 @@ export class AuthService {
 
   private readonly apiUrl = 'http://localhost:5002/';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private _router: Router
+  ) { }
 
   createUser(signupDetails:any): Observable<any>{
     const userDetails = {
@@ -33,8 +37,11 @@ export class AuthService {
   };
 
   authenticator(){
-    const accessToken= localStorage.getItem("accessToken");
-    console.log("accessToken", accessToken);
-    return this.httpClient.post((this.apiUrl+"auth"), {accessToken:accessToken}) as any;
+    console.log("accessToken", localStorage.getItem("accessToken"));
+    return this.httpClient.post((this.apiUrl+"auth"), {accessToken: localStorage.getItem("accessToken")}).subscribe((authRes:any)=>{
+      if(!authRes.status || !authRes.success){
+        (this._router).navigate(['login']);
+      }
+    })
   }
 }

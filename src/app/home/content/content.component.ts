@@ -3,10 +3,8 @@ import { TaskService } from 'src/app/common/services/task/task.service';
 import { EventValue, GetAllTasks, RawTaskStructure } from '../modals/common.home';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogBoxComponent } from 'src/app/common/dialog-box/dialog-box.component';
 import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
 import { AuthService } from 'src/app/auth/auth-service/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-content',
@@ -31,16 +29,11 @@ export class ContentComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private taskService: TaskService,
-    private dialog: MatDialog,
-    private _router: Router
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.authService.authenticator().subscribe((authRes:any)=>{
-      if(!authRes.status || !authRes.success){
-        (this._router).navigate(['login']);
-      }
-    });
+    this.authService.authenticator();
     this.taskService.notifyTaskAdded();
     this.loadTasksData();
   }
@@ -95,18 +88,7 @@ export class ContentComponent implements OnInit, OnDestroy {
       }
   }
 
-  deleteTask(taskId: any) {
-    this.dialog.open(DialogBoxComponent, {
-      width: '400px',
-      data:taskId
-    }).afterClosed().subscribe((res)=>{
-      if(res){
-        this.loadTasksData();
-      }
-    });
-  }
-
-  addEditTask(taskList:any) {
+  addEditDelTask(taskList:any) {
     this.dialog.open(AddEditTaskComponent, {
       width: '400px',
       data: taskList

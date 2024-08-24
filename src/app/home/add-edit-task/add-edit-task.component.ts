@@ -25,11 +25,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   addEditForm!: FormGroup;
 
   ngOnInit() {
-    this.authService.authenticator().subscribe((authRes:any)=>{
-      if(!authRes.status || !authRes.success){
-        (this._router).navigate(['login']);
-      }
-    });
+    this.authService.authenticator();
     this.addEditForm = new FormGroup({
       taskName: new FormControl(this.data?.txt_taskName || ''),
       description: new FormControl(this.data?.txt_description || ''),
@@ -82,6 +78,25 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
       else{
         console.log("Failed to update data");
       };
+    })
+  }
+
+  async softDeleteTask(){
+    await this.taskService.deleteTask(this.data).subscribe(async (res:any)=>{
+      console.log("res",res);
+      if(res && res.success){
+        await this.taskService.getAllTasks().subscribe((res:any)=>{
+          if(res.success && res.details.count && res.details.rows){
+            this.taskService.notifyTaskAdded();
+          }
+          else{
+            console.log("Failed to get task data");
+          }
+        })
+      }
+      else{
+        console.log("Failed to delete task data");
+      }
     })
   }
 

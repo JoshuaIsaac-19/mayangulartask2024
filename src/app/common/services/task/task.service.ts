@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth-service/auth.service';
 import { GetAllTasks, RawTaskStructure, TaskStructure } from 'src/app/home/modals/common.home';
 
 @Injectable({
@@ -12,19 +14,28 @@ export class TaskService {
   private taskAddedSource = new Subject<void>();
   taskAdded$ = this.taskAddedSource.asObservable()
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+
+    private httpClient: HttpClient,
+    private authService: AuthService,
+    private _router: Router
+
+  ) { }
 
   createNewTask(newTaskForm: any) {
-    console.log(this.apiUrl, newTaskForm)
+    console.log(this.apiUrl, newTaskForm);
+    // this.authenticateToken();
     return this.httpClient.post((this.apiUrl), newTaskForm) as any;
   }
 
   updateTask(editTaskForm:any){
     console.log(editTaskForm);
+    // this.authenticateToken();
     return this.httpClient.put((this.apiUrl), editTaskForm) as any;
   }
 
   upsertTask(newTaskForm: any) {
+
     return this.httpClient.post((this.apiUrl+"upsertTaskData"), newTaskForm) as any;
   }
 
@@ -46,5 +57,4 @@ export class TaskService {
   getSimpleTable(){
     return this.httpClient.get(this.apiUrl+"/testing") as any;
   }
-  
 }

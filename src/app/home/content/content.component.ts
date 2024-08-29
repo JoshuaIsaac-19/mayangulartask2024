@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
 import { AuthService } from 'src/app/auth/auth-service/auth.service';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 @Component({
   selector: 'app-content',

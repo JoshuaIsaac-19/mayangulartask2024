@@ -14,9 +14,11 @@
 
     <span class="example-spacer"></span>    
     
+    <!-- <button mat-button class=""><mat-icon class="logout-button">power_settings_new</mat-icon></button> -->
     <button mat-button [matMenuTriggerFor]="beforeMenu"><mat-icon>power_settings_new</mat-icon></button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <button mat-menu-item >Item 1</button>
+        <p>Logged in as {{user}}</p>
+        <p><button (click)="logoutUser()" mat-raised-button color="primary">Logout</button></p>
       </mat-menu>
     
   </mat-toolbar>

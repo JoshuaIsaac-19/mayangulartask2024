@@ -63,7 +63,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
     };
     console.log("editNewTask", editNewTask);
     await this.taskService.upsertTask(editNewTask).subscribe(async (data: any)=>{
-      console.log("upsert data", data);
+      // console.log("upsert data", data);
       if(data && data.success){
        await this.taskService.getAllTasks().subscribe((data: any)=>{
           if(data.success && data.details.count && data.details.rows){
@@ -83,7 +83,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
 
   async softDeleteTask(){
     await this.taskService.deleteTask(this.data).subscribe(async (res:any)=>{
-      console.log("res",res);
+      // console.log("res",res);
       if(res && res.success){
         await this.taskService.getAllTasks().subscribe((res:any)=>{
           if(res.success && res.details.count && res.details.rows){

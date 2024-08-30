@@ -35,8 +35,9 @@ export class ContentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    console.log("Called Content OnInit");
     this.authService.authenticator();
-    this.taskService.notifyTaskAdded();
+    // this.taskService.notifyTaskAdded();
     this.loadTasksData();
   }
 
@@ -61,7 +62,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   async loadTasksData() {
       await this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
         if (data && data.success && data.details.count && data.details.rows) {
-          console.log('loadTasksData success');
+          // console.log('loadTasksData success');
           this.globalTaskData = data.details.rows;
           this.getAllTaskData = data.details.rows;
         }
@@ -74,15 +75,15 @@ export class ContentComponent implements OnInit, OnDestroy {
   async onEmit(event:EventValue){
       if((event.value=='low' || event.value=='Low') && this.getAllTaskData){
         this.getAllTaskData=this.globalTaskData.filter((item:any)=>item.txt_priority=='Low');
-        console.log("onEmit Low ", this.getAllTaskData);      
+        // console.log("onEmit Low ", this.getAllTaskData);
       }
       else if((event.value=='high' || event.value=='High') && this.getAllTaskData){
         this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='High');
-        console.log("onEmit High ", this.getAllTaskData);
+        // console.log("onEmit High ", this.getAllTaskData);
       }
       else if((event.value=='medium' || event.value=='Medium') && this.getAllTaskData){
         this.getAllTaskData= this.globalTaskData.filter((item:any)=>item.txt_priority=='Medium');
-        console.log("onEmit medium ", this.getAllTaskData);
+        // console.log("onEmit medium ", this.getAllTaskData);
       }
       else{
         this.loadTasksData();

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth-service/auth.service';
 import { Router } from '@angular/router';
@@ -8,13 +8,21 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
-  constructor(private authService: AuthService, private _router:Router){}
+  constructor(private authService: AuthService, private _router:Router) { }
+  ngOnInit(): void {
+    console.log("Oninit called");
+    console.log("localStorage ",localStorage.getItem("accessToken"));
+    localStorage.removeItem("accessToken");
+    console.log("localStorage.getItem ", localStorage.getItem("accessToken"));
+  }
   loginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl('')
   });
+
+  
 
   onSubmit() {
     this.authService.loginUser(this.loginForm.value).subscribe((res:any)=>{

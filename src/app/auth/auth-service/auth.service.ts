@@ -44,4 +44,10 @@ export class AuthService {
       }
     })
   }
+
+  logout(){
+    console.log("Logout Called");
+    return this.httpClient.post((this.apiUrl+"logout"), {accessToken: localStorage.getItem("accessToken")});
+
+  }
 }

@@ -1,20 +1,35 @@
 .example-spacer {
     flex: 1 1 auto;
-  }
+};
 .normal-space {
     padding-left:1%;
     margin-top: 8%;
     display: flex;
     justify-content: center;
-}
+};
 .active-button{
     background-color: #007bff;
     color: white;
-}
+};
 .nav-title{
     padding-right: 2%;
-}
+};
 .custom-background{
     background-color: rgb(245, 169, 226);
+};
+.logout-text{
+    padding: 1%;
+    font-size: 1%
+};
+.logout-button{
+    font-size: 50px;
+    height: 50px;
+    width: 50px;
+};
+p.ng-tns-c19-0{
+    //for the logged in text while logout
+    margin-inline-start:16%;
 }
-  
+.mat-mdc-menu-content{
+    padding: 8px 19px;
+}

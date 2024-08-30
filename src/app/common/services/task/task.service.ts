@@ -23,13 +23,13 @@ export class TaskService {
   ) { }
 
   createNewTask(newTaskForm: any) {
-    console.log(this.apiUrl, newTaskForm);
+    // console.log(this.apiUrl, newTaskForm);
     // this.authenticateToken();
     return this.httpClient.post((this.apiUrl), newTaskForm) as any;
   }
 
   updateTask(editTaskForm:any){
-    console.log(editTaskForm);
+    // console.log(editTaskForm);
     // this.authenticateToken();
     return this.httpClient.put((this.apiUrl), editTaskForm) as any;
   }
@@ -40,17 +40,17 @@ export class TaskService {
   }
 
   getAllTasks(): Observable<any> {
-    console.log(this.apiUrl);
+    // console.log(this.apiUrl);
     return this.httpClient.get(this.apiUrl) as any; 
   }
 
   deleteTask(taskId:any){
-    console.log("taskId",taskId);
+    // console.log("taskId",taskId);
     return this.httpClient.delete(`${this.apiUrl}/${taskId}`) as any;
   }
 
   notifyTaskAdded() {
-    console.log("this.taskAddedSource", this.taskAddedSource);
+    // console.log("this.taskAddedSource", this.taskAddedSource);
     this.taskAddedSource.next();
   }
 

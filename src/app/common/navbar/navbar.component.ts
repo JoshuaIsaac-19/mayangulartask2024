@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/auth/auth-service/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,12 +12,14 @@ import { MatDialog } from '@angular/material/dialog';
 export class NavbarComponent implements OnInit {
   constructor(
     private _router:Router, 
-    private openDialog: MatDialog, 
-    private fb: FormBuilder) {}
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {}
 
   newTaskForm!: FormGroup;
   @ViewChild('addTask', {static:true}) addaNewTask!:TemplateRef<any>;
 
+    user:string= "Joshua";
     currentUrl: string[] =[];
     currentRoute: string="";
     urlArrayLength: number=0;
@@ -26,8 +29,8 @@ export class NavbarComponent implements OnInit {
     isSettingsActive: boolean= false;
 
     menuHome: string= "Home";
-    menuAboutUs: string= "About us"
-    menuSettings: string= "Settings"  
+    menuAboutUs: string= "About us";
+    menuSettings: string= "Settings";
 
     ngOnInit() {
       this.currentUrl = (this._router.url).split('/');
@@ -50,6 +53,11 @@ export class NavbarComponent implements OnInit {
       });
     }
     
+    logoutUser(){
+      this.authService.logout();
+      (this._router).navigate(['/login']);
+    }
+
    toggleActive(str:any){
     if(str=='Home'){
       if(!this.isHomeActive){
@@ -99,22 +107,22 @@ export class NavbarComponent implements OnInit {
   //   taskName: new FormControl('')
   //   // dueDate: new FormControl('')
   // })
-  addNewTask(){
+  // addNewTask(){
 
-    console.log("AddTask Button Clicked");
-    const dialogRef=this.openDialog.open(this.addaNewTask, {
-      autoFocus:false,
-      width:'400px'
-    });
-    dialogRef.afterClosed().subscribe(response =>{
-      if(response){
-        console.log(this.newTaskForm.value)
-        // console.log(this.newTaskForm.value.taskName);
-        // console.log(this.taskStatus);
-        // console.log(this.dueDate)
-        this.newTaskForm.reset()
-      }
-      console.log('response: ', response)
-    })
-  }
+  //   console.log("AddTask Button Clicked");
+  //   const dialogRef=this.openDialog.open(this.addaNewTask, {
+  //     autoFocus:false,
+  //     width:'400px'
+  //   });
+  //   dialogRef.afterClosed().subscribe(response =>{
+  //     if(response){
+  //       console.log(this.newTaskForm.value)
+  //       // console.log(this.newTaskForm.value.taskName);
+  //       // console.log(this.taskStatus);
+  //       // console.log(this.dueDate)
+  //       this.newTaskForm.reset()
+  //     }
+  //     console.log('response: ', response)
+  //   })
+  // }
 }

@@ -101,28 +101,4 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  // taskStatus: string="";
-  // dueDate:Date=new Date();
-  // newTaskForm = new FormGroup({
-  //   taskName: new FormControl('')
-  //   // dueDate: new FormControl('')
-  // })
-  // addNewTask(){
-
-  //   console.log("AddTask Button Clicked");
-  //   const dialogRef=this.openDialog.open(this.addaNewTask, {
-  //     autoFocus:false,
-  //     width:'400px'
-  //   });
-  //   dialogRef.afterClosed().subscribe(response =>{
-  //     if(response){
-  //       console.log(this.newTaskForm.value)
-  //       // console.log(this.newTaskForm.value.taskName);
-  //       // console.log(this.taskStatus);
-  //       // console.log(this.dueDate)
-  //       this.newTaskForm.reset()
-  //     }
-  //     console.log('response: ', response)
-  //   })
-  // }
 }

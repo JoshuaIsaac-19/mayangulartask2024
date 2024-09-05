@@ -27,6 +27,10 @@ export class LoginComponent implements OnInit{
   onSubmit() {
     this.authService.loginUser(this.loginForm.value).subscribe((res:any)=>{
       console.log("res", res);
+      if((res.firstName || res.lastName) && res.userId){
+        this.authService.currentUserName= res.firstName+" "+res.lastName;
+        this.authService.userId= res.userId;
+      }
       if(res.success){
         localStorage.setItem("accessToken", res.accessToken);
         (this._router).navigate(['app/home']);

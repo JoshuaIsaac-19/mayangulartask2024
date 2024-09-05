@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   private readonly apiUrl = 'http://localhost:5002/';
+  public currentUserName="";
+  public userId= 1;
 
   constructor(
     private httpClient: HttpClient,
@@ -39,6 +41,8 @@ export class AuthService {
   authenticator(){
     console.log("accessToken", localStorage.getItem("accessToken"));
     return this.httpClient.post((this.apiUrl+"auth"), {accessToken: localStorage.getItem("accessToken")}).subscribe((authRes:any)=>{
+      console.log({user: authRes.user.userName});
+      this.currentUserName=authRes.user.userName;
       if(!authRes.status || !authRes.success){
         (this._router).navigate(['login']);
       }

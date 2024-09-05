@@ -22,6 +22,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   private taskAddedSubscription!: Subscription;
 
   title='Title';
+  username= this.authService.currentUserName;
   filterArray=[
     {label: 'All', value: 'all'},
     {label: 'High', value: 'high'}, 

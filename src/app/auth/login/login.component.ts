@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit{
         (this._router).navigate(['app/home']);
       }
       else{
+        console.log("Else Reached");
         (this._router).navigate(['login']);
       }
     })

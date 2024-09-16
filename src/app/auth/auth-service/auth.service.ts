@@ -41,6 +41,7 @@ export class AuthService {
   authenticator(){
     console.log("accessToken", localStorage.getItem("accessToken"));
     return this.httpClient.post((this.apiUrl+"auth"), {accessToken: localStorage.getItem("accessToken")}).subscribe((authRes:any)=>{
+      console.log({userId:authRes.user});
       console.log({user: authRes.user.userName});
       this.currentUserName=authRes.user.userName;
       if(!authRes.status || !authRes.success){
@@ -52,6 +53,5 @@ export class AuthService {
   logout(){
     console.log("Logout Called");
     return this.httpClient.post((this.apiUrl+"logout"), {accessToken: localStorage.getItem("accessToken")});
-
   }
 }

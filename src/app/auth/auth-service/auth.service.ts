@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   private readonly apiUrl = 'http://localhost:5002/';
-  public currentUserName="";
+  // public currentUserName="";
   public userId= 1;
 
   constructor(
@@ -38,12 +38,16 @@ export class AuthService {
     return this.httpClient.post((this.apiUrl+"login"), userDetails) as any;
   };
 
-  authenticator(){
-    console.log("accessToken", localStorage.getItem("accessToken"));
-    return this.httpClient.post((this.apiUrl+"auth"), {accessToken: localStorage.getItem("accessToken")}).subscribe((authRes:any)=>{
+  async authenticator(){
+    // console.log("accessToken", localStorage.getItem("accessToken"));
+    if(localStorage.getItem("accessToken")){
+      console.log("accessToken", true);
+    }
+    return await this.httpClient.post((this.apiUrl+"auth"), {accessToken: localStorage.getItem("accessToken")}).subscribe((authRes:any)=>{
       console.log({userId:authRes.user});
       console.log({user: authRes.user.userName});
-      this.currentUserName=authRes.user.userName;
+      // this.currentUserName=authRes.user.userName;
+      // console.log("this.currentUserName: ",this.currentUserName+" in authService");
       if(!authRes.status || !authRes.success){
         (this._router).navigate(['login']);
       }

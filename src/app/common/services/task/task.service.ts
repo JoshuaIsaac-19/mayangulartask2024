@@ -41,7 +41,7 @@ export class TaskService {
 
   getAllTasks(): Observable<any> {
     // console.log(this.apiUrl);
-    return this.httpClient.get(`${this.apiUrl}/${this.authService.userId}`) as any; 
+    return this.httpClient.get(`${this.apiUrl}/${localStorage.getItem("userId")}`) as any;
   }
 
   deleteTask(taskId:any){

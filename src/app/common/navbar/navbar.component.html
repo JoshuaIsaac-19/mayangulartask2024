@@ -17,7 +17,7 @@
     <!-- <button mat-button class=""><mat-icon class="logout-button">power_settings_new</mat-icon></button> -->
     <button mat-button [matMenuTriggerFor]="beforeMenu"><mat-icon>power_settings_new</mat-icon></button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <p>Logged in as {{user}}</p>
+        <p>Logged in as {{userName}}</p>
         <p><button (click)="logoutUser()" mat-raised-button color="primary">Logout</button></p>
       </mat-menu>
     

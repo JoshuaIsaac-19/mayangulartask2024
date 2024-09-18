@@ -54,7 +54,7 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   async upsertTaskDetails() {
     const editNewTask={
       id: this.data?.id ?? null,
-      userId: this.authService.userId,
+      userId: localStorage.getItem("userId"),
       txt_taskName: this.addEditForm.value.taskName,
       txt_description: this.addEditForm.value.description,
       txt_status: this.addEditForm.value.status,

@@ -5,8 +5,6 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditTaskComponent } from '../add-edit-task/add-edit-task.component';
 import { AuthService } from 'src/app/auth/auth-service/auth.service';
-import {MatMenuModule} from '@angular/material/menu';
-
 
 @Component({
   selector: 'app-content',
@@ -22,7 +20,6 @@ export class ContentComponent implements OnInit, OnDestroy {
   private taskAddedSubscription!: Subscription;
 
   title='Title';
-  username= this.authService.currentUserName;
   filterArray=[
     {label: 'All', value: 'all'},
     {label: 'High', value: 'high'}, 
@@ -36,7 +33,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log("Called Content OnInit");
+    // console.log("Called Content OnInit");
     this.authService.authenticator();
     // this.taskService.notifyTaskAdded();
     this.loadTasksData();
@@ -61,14 +58,18 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   async loadTasksData() {
-      await this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
-        if (data && data.success && data.details.count && data.details.rows) {
-          // console.log('loadTasksData success');
-          this.globalTaskData = data.details.rows;
-          this.getAllTaskData = data.details.rows;
+      this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
+        if(data && data.success){
+          if(data.details.count && data.details.rows){
+            this.globalTaskData = data.details.rows;
+            this.getAllTaskData = data.details.rows;
+          }
+          else{
+            console.log("No data available");
+          }
         }
         else{
-          console.log("Failed to load task data");
+          console.log("Failed to load tasks data");
         }
       })
   }

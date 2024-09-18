@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   newTaskForm!: FormGroup;
   @ViewChild('addTask', {static:true}) addaNewTask!:TemplateRef<any>;
 
-    user= this.authService.currentUserName;
+    userName: string="";
     currentUrl: string[] =[];
     currentRoute: string="";
     urlArrayLength: number=0;
@@ -33,7 +33,10 @@ export class NavbarComponent implements OnInit {
     menuSettings: string= "Settings";
 
     ngOnInit() {
-      console.log(this.user+" in nav");
+      this.authService.authenticator();
+      this.userName= localStorage.getItem("userName")?? "null";
+      // this.userName= this.authService.getUserName();
+      // console.log("The userName is: '"+this.userName+"' in nav");
       this.currentUrl = (this._router.url).split('/');
       this.urlArrayLength= this.currentUrl.length;
       // console.log('Current URL:', this.currentUrl[this.urlArrayLength-1]);

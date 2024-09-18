@@ -18,8 +18,8 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-            <mat-label>Description</mat-label>
-            <textarea matInput placeholder="" formControlName="description"></textarea>
+            <mat-label for="description">Description</mat-label>
+            <textarea id="description" matInput placeholder="" formControlName="description"></textarea>
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
@@ -32,7 +32,7 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-            <mat-label for="status">Priority </mat-label>
+            <mat-label for="priority">Priority </mat-label>
             <mat-select formControlName="priority">
                 <mat-option value="Low">Low</mat-option>
                 <mat-option value="Medium">Medium</mat-option>
@@ -41,7 +41,7 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-            <mat-label>Due Date</mat-label>
+            <mat-label for="dueDate">Due Date</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="dueDate">
             <mat-hint>MM/DD/YYYY</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker">

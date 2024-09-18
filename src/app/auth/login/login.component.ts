@@ -14,7 +14,11 @@ export class LoginComponent implements OnInit{
   ngOnInit(): void {
     console.log("Oninit called");
     console.log("localStorage ",localStorage.getItem("accessToken"));
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
     localStorage.removeItem("accessToken");
+    console.log("localStorage.getItem ", localStorage.getItem("userId"));
+    console.log("localStorage.getItem ", localStorage.getItem("userName"));
     console.log("localStorage.getItem ", localStorage.getItem("accessToken"));
   }
   loginForm = new FormGroup({
@@ -27,16 +31,17 @@ export class LoginComponent implements OnInit{
   onSubmit() {
     this.authService.loginUser(this.loginForm.value).subscribe((res:any)=>{
       console.log("res", res);
-      if((res.firstName || res.lastName) && res.userId){
-        this.authService.currentUserName= res.firstName+" "+res.lastName;
-        this.authService.userId= res.userId;
-      }
       if(res.success){
-        localStorage.setItem("accessToken", res.accessToken);
-        (this._router).navigate(['app/home']);
+        if((res.firstName || res.lastName) && res.userId){
+          localStorage.setItem("userId", res.userId);
+          localStorage.setItem("userName", res.firstName+" "+res.lastName);
+          console.log(localStorage.getItem("userName"));
+          localStorage.setItem("accessToken", res.accessToken);
+          (this._router).navigate(['app/home']);
+        }
       }
       else{
-        console.log("Else Reached");
+        console.log("Something went wrong while loging in!");
         (this._router).navigate(['login']);
       }
     })

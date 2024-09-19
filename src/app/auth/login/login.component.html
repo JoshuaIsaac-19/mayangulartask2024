@@ -1,4 +1,25 @@
-<div class="login-body">
+<mat-card class="main-content">
+  <mat-card-header class="login-header"> Login </mat-card-header><br>
+  <mat-card-content align="center">
+    <form [formGroup]="loginForm">
+      <mat-form-field class="full-width">
+        <mat-label for="emailAddress">Email</mat-label>
+        <input for="emailAddress" formControlName="email" matInput>
+      </mat-form-field>
+      <mat-form-field class="full-width"> 
+        <mat-label for="password">Password</mat-label>
+        <input for="password" formControlName="password" matInput>
+      </mat-form-field> 
+      <div style="align-items: center;">
+        <p >New? <a routerLink="/signup" style="text-decoration: none;"> Sign in here!</a></p>
+      </div>
+      <button style="align-items: center;" type="submit" mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+<!-- <div class="login-body">
   <section class="container">
     <header>Login</header>
     <form class="form" [formGroup]="loginForm">
@@ -16,4 +37,4 @@
     </form>
   </section>
 </div>
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> -->

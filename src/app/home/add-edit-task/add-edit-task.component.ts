@@ -82,8 +82,10 @@ export class AddEditTaskComponent implements OnInit, OnDestroy {
   }
 
   async softDeleteTask(){
+    
     await this.taskService.deleteTask(this.data).subscribe(async (res:any)=>{
       // console.log("res",res);
+      console.log("deleteTask data: ", this.data);
       if(res && res.success){
         await this.taskService.getAllTasks().subscribe((res:any)=>{
           if(res.success && res.details.count && res.details.rows){

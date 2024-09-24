@@ -58,13 +58,13 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   async loadTasksData() {
-      this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
+      await this.taskService.getAllTasks().subscribe((data: GetAllTasks) => {
         if(data && data.success){
-          if(data.details.count && data.details.rows){
+          // if(data.details.count && data.details.rows){
             this.globalTaskData = data.details.rows;
             this.getAllTaskData = data.details.rows;
-          }
-          else{
+          // }
+          if(data.details.count){
             console.log("No data available");
           }
         }

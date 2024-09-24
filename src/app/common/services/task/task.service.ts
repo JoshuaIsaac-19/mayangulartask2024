@@ -41,12 +41,12 @@ export class TaskService {
 
   getAllTasks(): Observable<any> {
     // console.log(this.apiUrl);
-    return this.httpClient.get(`${this.apiUrl}/${localStorage.getItem("userId")}`) as any;
+    return this.httpClient.get(`${this.apiUrl}${localStorage.getItem("userId")}`) as any;
   }
 
   deleteTask(taskId:any){
     // console.log("taskId",taskId);
-    return this.httpClient.delete(`${this.apiUrl}/${taskId}`) as any;
+    return this.httpClient.delete(`${this.apiUrl}${taskId}`) as any;
   }
 
   notifyTaskAdded() {
